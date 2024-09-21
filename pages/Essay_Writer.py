@@ -8,7 +8,7 @@ from langchain.llms import CTransformers
 from accelerate import Accelerator
 import streamlit as st
 
-accelerator = Accelerator()
+#accelerator = Accelerator()
 URL = "https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGUF/resolve/main/llama-2-7b-chat.Q3_K_S.gguf"
 MODELPATH = "models/llama-2-7b-chat.Q3_K_S.gguf"
 
@@ -40,7 +40,7 @@ def getLlamaResponse(input_text, no_words, category):
                                 'gpu_layers':50
                                 })
     
-    llm = accelerator.prepare(llm)
+    #llm = accelerator.prepare(llm)
     
     ## PromptTemplate
     template = """Write a  {category} on {input_text} in less than {no_words} words"""
