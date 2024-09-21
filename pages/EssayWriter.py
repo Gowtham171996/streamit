@@ -37,7 +37,7 @@ def getLlamaResponse(input_text, no_words, category):
                         model_type = 'llama',
                         config={'max_new_tokens': 256,
                                 'temperature': 0.01,
-                                'gpu_layers':50
+                                #'gpu_layers':50
                                 })
     
     #llm = accelerator.prepare(llm)
@@ -78,7 +78,7 @@ with st.container(border=True):
         no_words = st.text_input('No of words')
     with col2:
         category = st.selectbox("category",
-                                ('Essays', 'Poem', 'Joke', 'Blog'),
+                                ('Essays', 'Poem', 'Blog'),
                                 index=0)
         
     submit = st.button("Generate")

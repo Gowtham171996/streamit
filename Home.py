@@ -11,7 +11,7 @@ with st.container(border=True):
     col1, col2 = st.columns(2)
     with col1:
         if st.button("Essay Writer"):
-            st.switch_page("pages/essay_writer.py")
+            st.switch_page("pages/EssayWriter.py")
     with col2:
         st.markdown("This is a simple essay writer which will write a breif essay on the topic provided. ")
 
