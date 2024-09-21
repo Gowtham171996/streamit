@@ -4,18 +4,17 @@
 from pathlib import Path
 import streamlit as st
 from langchain.prompts import PromptTemplate
-from langchain.llms import CTransformers
+from langchain_community.llms import CTransformers
 from accelerate import Accelerator
 import streamlit as st
+from urllib.request import urlopen
+from shutil import copyfileobj
 
 #accelerator = Accelerator()
 URL = "https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGUF/resolve/main/llama-2-7b-chat.Q3_K_S.gguf"
 MODELPATH = "models/llama-2-7b-chat.Q3_K_S.gguf"
 
 def load_model():
-    from urllib.request import urlopen
-    from shutil import copyfileobj
-
 
     save_dest = Path('models')
     save_dest.mkdir(exist_ok=True)
@@ -27,6 +26,8 @@ def load_model():
             with urlopen(URL) as in_stream, open(MODELPATH, 'wb') as out_file:
                 copyfileobj(in_stream, out_file)
         print("Finished Downloading model")
+    else:
+        print("Model already exists.")
 
 
 ## Function to get response from LLAMA 2 Model
@@ -50,7 +51,7 @@ def getLlamaResponse(input_text, no_words, category):
     
     with st.spinner("Running the model... just few seconds more...."):
         ## Generate the reponse from the LLama 2 Model
-        respone = llm(prompt.format(category=category,input_text=input_text,no_words=no_words))
+        respone = llm.invoke(prompt.format(category=category,input_text=input_text,no_words=no_words))
         print(respone)
     return respone
 
