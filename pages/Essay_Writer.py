@@ -1,6 +1,7 @@
 #https://github.com/riteshhere/creativeWriter-llama
 
 
+from pathlib import Path
 import streamlit as st
 from langchain.prompts import PromptTemplate
 from langchain.llms import CTransformers
@@ -8,9 +9,31 @@ from accelerate import Accelerator
 import streamlit as st
 
 accelerator = Accelerator()
+URL = "https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGUF/resolve/main/llama-2-7b-chat.Q3_K_S.gguf"
+MODELPATH = "models/llama-2-7b-chat.Q3_K_S.gguf"
+
+def load_model():
+    from urllib.request import urlopen
+    from shutil import copyfileobj
+
+
+    save_dest = Path('models')
+    save_dest.mkdir(exist_ok=True)
+    
+    f_checkpoint = Path(MODELPATH)
+
+    if not f_checkpoint.exists():
+        with st.spinner("Downloading model... this may take awhile! \n Don't stop it!"):
+            with urlopen(URL) as in_stream, open(MODELPATH, 'wb') as out_file:
+                copyfileobj(in_stream, out_file)
+        print("Finished Downloading model")
+
+
 ## Function to get response from LLAMA 2 Model
 def getLlamaResponse(input_text, no_words, category):
-    llm = CTransformers(model = 'models\llama-2-7b-chat.Q3_K_S.gguf',
+    load_model()
+     
+    llm = CTransformers(model = MODELPATH,
                         model_type = 'llama',
                         config={'max_new_tokens': 256,
                                 'temperature': 0.01,
@@ -25,20 +48,26 @@ def getLlamaResponse(input_text, no_words, category):
     prompt = PromptTemplate(input_variables = ["input_text", "no_words", "category"],
                             template = template)
     
-    ## Generate the reponse from the LLama 2 Model
-    respone = llm(prompt.format(category=category,input_text=input_text,no_words=no_words))
-    print(respone)
+    with st.spinner("Running the model... just few seconds more...."):
+        ## Generate the reponse from the LLama 2 Model
+        respone = llm(prompt.format(category=category,input_text=input_text,no_words=no_words))
+        print(respone)
     return respone
 
 
 
 st.set_page_config(page_title = "Essay Writer",
                     layout='centered',
-                    initial_sidebar_state = "collapsed")
+                    initial_sidebar_state = "expanded")
 
-st.header("Essay Writer")
-if st.button("Home"):
-    st.switch_page("Home.py")
+
+col1, col2 = st.columns(2)
+with st.container(border=True):
+    with col1:
+        st.header("Essay Writer")
+    with col2:    
+        if st.button("Home",use_container_width=True):
+            st.switch_page("Home.py")
 
 with st.container(border=True):
     input_text = st.text_input("Enter the topic you want to write about")

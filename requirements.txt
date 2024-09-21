@@ -6,3 +6,4 @@ python-box
 streamlit
 torch
 transformers
+langchain_community

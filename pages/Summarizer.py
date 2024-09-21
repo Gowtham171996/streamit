@@ -1,8 +1,11 @@
 import streamlit as st
 
-st.header("Summary")
-if st.button("Home"):
-    st.switch_page("Home.py")
+col1, col2 = st.columns(2)
+with col1:
+    st.header("Summary")
+with col2:
+    if st.button("Home",use_container_width=True):
+        st.switch_page("Home.py")
 
 
 def Summariser(wall_of_text):
@@ -14,7 +17,7 @@ def Summariser(wall_of_text):
     summarizer = pipeline(
         "summarization",
         hf_name,
-        device="cuda:1" #device=0 if torch.cuda.is_available() else -1,
+        device=0 if torch.cuda.is_available() else -1,
     )
 
     result = summarizer(
