@@ -34,7 +34,7 @@ def load_model():
 def getLlamaResponse(input_text, no_words, category):
     #load_model()
      
-    llm = CTransformers(model="TheBloke/Llama-2-7B-Chat-GGUF"
+    llm = CTransformers(model= "TheBloke/TinyLlama-1.1B-Chat-v1.0-GPTQ" #"TheBloke/Llama-2-7B-Chat-GGUF"
                         #model = MODELPATH,
                         #model_type = 'llama',
                         #config={'max_new_tokens': 256,
