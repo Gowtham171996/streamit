@@ -46,28 +46,25 @@ def getLlamaResponse(input_text, no_words, category):
                         )
     
     #llm = accelerator.prepare(llm)
+
+    #template = """"role": "system", "content": "You are a {category} writing assistant."
+    #              "role": "user",  "content":   So write a {category} on {input_text} in less than {no_words} words """
     
-    messages = [
-        {"role": "system", "content": "You are a story writing assistant."},
-        {
-            "role": "user",
-            "content": "Write a story about llamas."
-        }
-    ]
-
-    ## PromptTemplate
-    #template = """You are a {category} writing bot. So write a {category} on {input_text} in less than {no_words} words """
-
-    template = """"role": "system", "content": "You are a {category} writing assistant."
-                  "role": "user",  "content":   So write a {category} on {input_text} in less than {no_words} words """
+    template =f'''<|system|>
+        "You are a {category} writing assistant."</s>
+        <|user|>
+        write a {category} on {input_text} in less than {no_words} words</s>
+        <|assistant|>
+        '''
 
     prompt = PromptTemplate(input_variables = ["input_text", "no_words", "category"], template = template)
     
     with st.spinner("Running the model... just few seconds more...."):
         ## Generate the reponse from the LLama 2 Model
-        respone = llm.invoke(prompt.format(category=category,input_text=input_text,no_words=no_words))
-        print(respone)
-    return respone
+        response = llm.invoke(prompt.format(category=category,input_text=input_text,no_words=no_words))
+        print(response)
+
+    return response
 
 
 

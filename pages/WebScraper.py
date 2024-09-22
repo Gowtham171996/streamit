@@ -5,31 +5,24 @@ from bs4 import BeautifulSoup
 
 
 def WebParser(url):
-    # Step 1: Send a GET request to fetch the page content
-    response = requests.get(url)
+    webresponse = requests.get(url)
 
     # Step 2: Parse the HTML content
-    soup = BeautifulSoup(response.content, 'html.parser')
+    soup = BeautifulSoup(webresponse.content, 'html.parser')
+    print(soup)
 
     # Step 3: Find all relevant sections (articles)
-    # In this case, articles are under <h3> (for titles) and <p> (for content)
-    articles = soup.find_all('div', class_='jurAbsatz')
-
-    # Step 4: Extract and display each article's content
-    response = ""
-    for article in articles:
-        # Each article is usually contained within <p> tags
-        paragraphs = article.find_all('p')
-        print(article)
-        response += article + "\n"
-
-        
-        # Extract and print the content of each paragraph
-        for p in paragraphs:
-            print(p.get_text())
-            print()  # Print a blank line between paragraphs
-            response += p.get_text() + "\n\n"
-    return response
+    paragraphs = soup.find_all('p')
+    
+    text = ""
+    # Extract and print the content of each paragraph
+    for p in paragraphs:
+        text += p.get_text() + "\n" 
+        print(p.get_text())
+        print()  # Print a blank line between paragraphs
+    
+    print("Finished")
+    return text
 
 
 
@@ -60,4 +53,4 @@ with st.container(border=True):
     submit = st.button("Generate")
 
     if submit:
-        st.write(WebParser(input_URL))
+        st.write("Parsed:", WebParser(input_URL))
