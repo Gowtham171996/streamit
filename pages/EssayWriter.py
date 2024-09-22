@@ -11,6 +11,7 @@ from urllib.request import urlopen
 from shutil import copyfileobj
 
 #accelerator = Accelerator()
+LANGCHAIN_TRACING_V2=False
 URL = "https://huggingface.co/TheBloke/Llama-2-7B-Chat-GGUF/resolve/main/llama-2-7b-chat.Q3_K_S.gguf"
 MODELPATH = "models/llama-2-7b-chat.Q3_K_S.gguf"
 
@@ -32,14 +33,16 @@ def load_model():
 
 ## Function to get response from LLAMA 2 Model
 def getLlamaResponse(input_text, no_words, category):
-    load_model()
+    #load_model()
      
-    llm = CTransformers(model = MODELPATH,
-                        model_type = 'llama',
-                        config={'max_new_tokens': 256,
-                                'temperature': 0.01,
+    llm = CTransformers(model="TheBloke/Llama-2-7B-Chat-GGUF"
+                        #model = MODELPATH,
+                        #model_type = 'llama',
+                        #config={'max_new_tokens': 256,
+                        #        'temperature': 0.01,
                                 #'gpu_layers':50
-                                })
+                        #        }
+                        )
     
     #llm = accelerator.prepare(llm)
     
