@@ -34,7 +34,9 @@ def load_model():
 def getLlamaResponse(input_text, no_words, category):
     #load_model()
      
-    llm = CTransformers(model= "TheBloke/TinyLlama-1.1B-Chat-v1.0-GPTQ" #"TheBloke/Llama-2-7B-Chat-GGUF"
+    llm = CTransformers(model="TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF",
+                         model_file="tinyllama-1.1b-chat-v1.0.Q3_K_S.gguf"
+                        #model="TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF" #"TheBloke/Llama-2-7B-Chat-GGUF"
                         #model = MODELPATH,
                         #model_type = 'llama',
                         #config={'max_new_tokens': 256,
@@ -45,11 +47,21 @@ def getLlamaResponse(input_text, no_words, category):
     
     #llm = accelerator.prepare(llm)
     
-    ## PromptTemplate
-    template = """Write a  {category} on {input_text} in less than {no_words} words"""
+    messages = [
+        {"role": "system", "content": "You are a story writing assistant."},
+        {
+            "role": "user",
+            "content": "Write a story about llamas."
+        }
+    ]
 
-    prompt = PromptTemplate(input_variables = ["input_text", "no_words", "category"],
-                            template = template)
+    ## PromptTemplate
+    #template = """You are a {category} writing bot. So write a {category} on {input_text} in less than {no_words} words """
+
+    template = """"role": "system", "content": "You are a {category} writing assistant."
+                  "role": "user",  "content":   So write a {category} on {input_text} in less than {no_words} words """
+
+    prompt = PromptTemplate(input_variables = ["input_text", "no_words", "category"], template = template)
     
     with st.spinner("Running the model... just few seconds more...."):
         ## Generate the reponse from the LLama 2 Model
@@ -81,7 +93,7 @@ with st.container(border=True):
         no_words = st.text_input('No of words')
     with col2:
         category = st.selectbox("category",
-                                ('Essays', 'Poem', 'Blog'),
+                                ('Story', 'Poem', 'Blog'),
                                 index=0)
         
     submit = st.button("Generate")
