@@ -5,7 +5,6 @@ from pathlib import Path
 import streamlit as st
 from langchain.prompts import PromptTemplate
 from langchain_community.llms import CTransformers
-from accelerate import Accelerator
 import streamlit as st
 from urllib.request import urlopen
 from shutil import copyfileobj
