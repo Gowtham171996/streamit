@@ -7,4 +7,3 @@ streamlit
 torch
 transformers
 langchain_community
-accelerate

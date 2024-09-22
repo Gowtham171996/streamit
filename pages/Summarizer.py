@@ -24,19 +24,20 @@ def Summariser(wall_of_text):
         device=0 if torch.cuda.is_available() else -1,
     )
 
-    result = summarizer(
-        wall_of_text,
-        min_length=8,
-        max_length=256,
-        no_repeat_ngram_size=3,
-        encoder_no_repeat_ngram_size=3,
-        repetition_penalty=3.5,
-        num_beams=4,
-        do_sample=False,
-        early_stopping=True,
-    )
-    #print(result[0]["generated_text"])
-    print(result[0])
+    with st.spinner("Running the model... just few seconds more...."):
+        result = summarizer(
+            wall_of_text,
+            min_length=8,
+            max_length=256,
+            no_repeat_ngram_size=3,
+            encoder_no_repeat_ngram_size=3,
+            repetition_penalty=3.5,
+            num_beams=4,
+            do_sample=False,
+            early_stopping=True,
+        )
+        #print(result[0]["generated_text"])
+        print(result[0])
     return result
 
 with st.container(border=True):
