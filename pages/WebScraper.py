@@ -1,10 +1,11 @@
 import streamlit as st
 import requests
 from bs4 import BeautifulSoup
+import pandas as pd
 
 
 
-def WebParser(url):
+def WebParser(url,table):
     webresponse = requests.get(url)
 
     # Step 2: Parse the HTML content
@@ -16,13 +17,17 @@ def WebParser(url):
     
     text = ""
     # Extract and print the content of each paragraph
+    i = 0
     for p in paragraphs:
-        text += p.get_text() + "\n" 
+        table.loc[i] = [p.get_text()]
+        i += 1
+        #table.add_rows(st.text(p.get_text()))
+        #text += p.get_text() + "\n" 
         print(p.get_text())
         print()  # Print a blank line between paragraphs
     
     print("Finished")
-    return text
+    return table
 
 
 
@@ -53,4 +58,14 @@ with st.container(border=True):
     submit = st.button("Generate")
 
     if submit:
-        st.write("Parsed:", WebParser(input_URL))
+        df = pd.DataFrame({"paragraph": []})
+        
+        df = WebParser(input_URL,df)
+        df = df.drop_duplicates()
+        table = st.dataframe(df,use_container_width=True)
+
+with st.container(border=True):
+    st.markdown('''
+:red[NOTE:] 
+      Since every site has there own html tags and styles, currently it is
+optimised for default site url. Which can be extended as in required.  ''')
