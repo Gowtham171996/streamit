@@ -10,6 +10,8 @@ current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
 css_file = current_dir / "assets" / "main.css"
 resume_file = current_dir / "assets" / "gowtham-AI-resume.pdf" 
 profile_pic = current_dir / "assets" / "Gowtham.PNG"
+githublogo = current_dir / "assets" / "github.svg"
+linkedinlogo = current_dir / "assets" / "linkedin2.svg"
 
 # --- GENERAL SETTINGS ---
 PAGE_TITLE = "Digital CV | Gowtham B C"
@@ -32,8 +34,8 @@ PROJECTS = {
 st.set_page_config(page_title=PAGE_TITLE, page_icon=PAGE_ICON)
 
 
-github_html = get_img_with_href(current_dir/"assets"/"github.svg", 'https://github.com/Gowtham171996')
-linkedin_html = get_img_with_href(current_dir/"assets"/"linkedin2.svg", 'https://www.linkedin.com/in/gowtham-buvalli-chikkathammaiah-788b62a9/')
+github_html = get_img_with_href(githublogo, 'https://github.com/Gowtham171996')
+linkedin_html = get_img_with_href(linkedinlogo, 'https://www.linkedin.com/in/gowtham-buvalli-chikkathammaiah-788b62a9/')
 
 
 
@@ -85,7 +87,7 @@ st.write('\n')
 st.subheader("Experience & Qualifications")
 st.write(
     """
-- ✔️ 6 Years experience of Artificial Instelligence, Software Engineer and Consulting.
+- ✔️ 🧑‍💻 6 Years experience of Artificial Instelligence, Software Engineer and Consulting.
 - ✔️ Strong hands on experience and knowledge in Full stack software development.
 - ✔️ Good understanding of statistical principles and their respective applications
 - ✔️ Excellent team-player and displaying strong sense of initiative on tasks
@@ -142,6 +144,18 @@ st.write(
     """
 - ► Developed web applications dashboard for simplified User Interface and User Experience (UI and UX), site monitoring tool solutions using Sharepoint Elastic search and custom crawlers scripts which index 10000+ sites on half weekly basis and collect gigabytes of text information to our database.
 - ► Worked on dashboard as Full stack developer including Azure cloud infrastructure setup, cloud monitoring and custom sharepoint .Net scripts development.Devised KPIs using SQL across company website in collaboration with cross-functional teams to achieve a 120% jump in organic traﬃc
+"""
+)
+
+# --- SKILLS ---
+st.write('\n')
+st.write('\n')
+st.write("---")
+st.subheader("Languages")
+st.write(
+    """
+- 🇩🇪 German: B2
+- 🇺🇸 English: C1
 """
 )
 
