@@ -2,7 +2,7 @@ from pathlib import Path
 
 import streamlit as st
 from PIL import Image
-from headerfooter import get_img_with_href
+from headerfooter import get_img_with_href,footer
 
 
 # --- PATH SETTINGS ---
@@ -32,8 +32,8 @@ PROJECTS = {
 st.set_page_config(page_title=PAGE_TITLE, page_icon=PAGE_ICON)
 
 
-github_html = get_img_with_href('pages\\assets\github.svg', 'https://github.com/Gowtham171996')
-linkedin_html = get_img_with_href('pages\\assets\linkedin2.svg', 'https://www.linkedin.com/in/gowtham-buvalli-chikkathammaiah-788b62a9/')
+github_html = get_img_with_href(current_dir/"assets"/"github.svg", 'https://github.com/Gowtham171996')
+linkedin_html = get_img_with_href(current_dir/"assets"/"linkedin2.svg", 'https://www.linkedin.com/in/gowtham-buvalli-chikkathammaiah-788b62a9/')
 
 
 
@@ -152,3 +152,6 @@ st.subheader("Projects & Accomplishments")
 st.write("---")
 for project, link in PROJECTS.items():
     st.write(f"[{project}]({link})")
+
+
+st.markdown(footer,unsafe_allow_html=True)

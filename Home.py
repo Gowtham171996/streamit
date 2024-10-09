@@ -2,7 +2,7 @@
 
 
 import streamlit as st
-from headerfooter import footer,Disclaimer,header
+from headerfooter import footer,Disclaimer 
 st.set_page_config(page_title = "Gowtham B C Portfolio",layout='centered',initial_sidebar_state = "expanded")
 
 #st.markdown(header,unsafe_allow_html=True)

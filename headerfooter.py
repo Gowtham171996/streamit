@@ -41,31 +41,14 @@ def Disclaimer(text=""):
 
     return disclaimerbox
 
-header="""<style>
 
-.header {
-    position: fixed;
-    left: 0;
-    bottom: 1;
-    width: 100%;
-    background-color: rgb(38 39 48); 
-    color: black;
-    text-align: center;
-}
-
-</style>
-<div class="header">
-        <h3 style="color:wheat;">
-            Gowtham B C Portfolio
-        </h3>
-</div>
-"""
 
 
 footer="""<style>
-a:link , a:visited{
+a:link , a:visited > span{
     background-color: transparent;
-    color: wheat;
+    color: black ;
+    font-weight: bold;
 }
 
 a:hover,  a:active {
@@ -75,8 +58,10 @@ a:hover,  a:active {
 
 /* Change the sidebar color*/
 [data-testid=stSidebar] {
-  background-image: linear-gradient(#000395,#EC058E);
+  background-image: linear-gradient(#ffffff, #e3daab);
 }
+
+
 
 .footer {
     position: fixed;
@@ -92,7 +77,7 @@ a:hover,  a:active {
 <div class="footer">
     <p style="color:white;">
         Developed with ❤ by
-        <a style='text-align:center;text-decoration: auto;' href="https://www.linkedin.com/in/gowtham-buvalli-chikkathammaiah-788b62a9/" target="_blank">
+        <a style='text-align:center;text-decoration: auto; color: wheat ;' href="https://www.linkedin.com/in/gowtham-buvalli-chikkathammaiah-788b62a9/" target="_blank">
             Gowtham B C 
         </a>
     </p>
