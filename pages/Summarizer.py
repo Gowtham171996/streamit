@@ -4,7 +4,7 @@ st.set_page_config(page_title = "Summarizer",
                     layout='centered',
                     initial_sidebar_state = "expanded")
 
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([60,40],gap="medium",vertical_alignment="bottom")
 with col1:
     st.header("Summary")
 with col2:

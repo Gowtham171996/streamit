@@ -1,5 +1,6 @@
-from pathlib import Path
+#https://github.com/Sven-Bo/digital-resume-template-streamlit/blob/master/app.py
 
+from pathlib import Path
 import streamlit as st
 from PIL import Image
 from headerfooter import get_img_with_href,footer
@@ -76,11 +77,8 @@ with st.container(border=True):
             st.write('\n')
 
 # --- SOCIAL LINKS ---
+st.write("---")
 st.write('\n')
-#with st.container(border=True):
-#    cols = st.columns(len(SOCIAL_MEDIA))
-#    for index, (platform, link) in enumerate(SOCIAL_MEDIA.items()):
-#        cols[index].write(f"[{platform}]({link})")
 
 # --- EXPERIENCE & QUALIFICATIONS ---
 st.write('\n')
@@ -162,8 +160,9 @@ st.write(
 
 # --- Projects & Accomplishments ---
 st.write('\n')
-st.subheader("Projects & Accomplishments")
 st.write("---")
+st.subheader("Projects & Accomplishments")
+
 for project, link in PROJECTS.items():
     st.write(f"[{project}]({link})")
 

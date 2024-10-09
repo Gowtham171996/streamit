@@ -74,7 +74,7 @@ st.set_page_config(page_title = "Essay Writer",
                     initial_sidebar_state = "collapsed")
 
 
-col1, col2 = st.columns([60,40],gap="medium")
+col1, col2 = st.columns([60,40],gap="medium",vertical_alignment="bottom")
 with st.container(border=True):
     with col1:
         st.header("Essay Writer")

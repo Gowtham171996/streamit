@@ -36,7 +36,7 @@ st.set_page_config(page_title = "Web Scrapper",
                     layout='centered',
                     initial_sidebar_state = "expanded")
 
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([60,40],gap="medium",vertical_alignment="bottom")
 with st.container(border=True):
     with col1:
         st.header("Web Scrapper")

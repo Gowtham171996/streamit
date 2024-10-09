@@ -41,7 +41,28 @@ def Disclaimer(text=""):
 
     return disclaimerbox
 
+header="""<style>
 
+.headercustom {
+    position: fixed;
+    left: 0px;
+    Top: 100px;
+    width:100%;
+    background-color: rgb(38 39 48);
+    color: black;
+    text-align: center;
+}
+
+</style>
+<div class="headercustom">
+    <p>
+        <a style='text-decoration: auto; color: wheat ;' href="https://www.linkedin.com/in/gowtham-buvalli-chikkathammaiah-788b62a9/" target="_blank">
+            Hi, I am Gowtham BC looking for Job oppurtunities in Germany. 
+            You can reach out to me at bcgowtham17@gmail.com
+        </a>
+    </p>
+</div>
+"""
 
 
 footer="""<style>
@@ -55,13 +76,13 @@ a:link  > span{
     color: black ;
 }
 
-ul {
-  list-style-type: none;
-}
-
 a:hover,  a:active {
     background-color: transparent;
     color:red;
+}
+
+hr {
+    border-bottom:4px solid rgba(245, 222, 179, 0.2);
 }
 
 /* Change the sidebar color*/
@@ -69,13 +90,7 @@ a:hover,  a:active {
   background-image: linear-gradient(#ffffff, #e3daab);
 }
 
-[data-testid=stMarkdownContainer] a:link {
-  color: wheat;
-}
-
-
-
-.footer {
+.footercustom {
     position: fixed;
     left: 0;
     bottom: 0;
@@ -86,7 +101,7 @@ a:hover,  a:active {
 }
 
 </style>
-<div class="footer">
+<div class="footercustom">
     <p style="color:white;">
         Developed with ❤ by
         <a style='text-align:center;text-decoration: auto; color: wheat ;' href="https://www.linkedin.com/in/gowtham-buvalli-chikkathammaiah-788b62a9/" target="_blank">

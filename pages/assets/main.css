@@ -31,6 +31,15 @@ color: red;
 text-decoration: underline; 
 }
 
+ul {
+  list-style-type: none;
+}
+
+[data-testid=stMarkdownContainer] a:link {
+  color: wheat;
+}
+
+
 .fullHeight {
   height : 3vh; 
   width : 100%

@@ -39,10 +39,10 @@ st.set_page_config(page_title = "PDF Query",
                     layout='centered',
                     initial_sidebar_state = "auto")
 
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([65,35],gap="small",vertical_alignment="bottom")
 with st.container(border=True):
     with col1:
-        st.header("PDF Question and Answering")
+        st.header("PDF Question & Answering")
     with col2:    
         if st.button("Home",use_container_width=True):
             st.switch_page("Home.py")
