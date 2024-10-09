@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-from headerfooter import footer,Disclaimer
+from headerfooter import footer,Disclaimer,JobSearch
 
 
 
@@ -68,3 +68,4 @@ with st.container(border=True):
 Disclaimer("Since every site has there own html tags and styles, currently it is optimised for default site url. Which can be extended as in required.")
 
 st.markdown(footer,unsafe_allow_html=True)
+JobSearch()

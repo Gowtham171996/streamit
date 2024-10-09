@@ -51,6 +51,7 @@ header="""<style>
     background-color: rgb(38 39 48);
     color: black;
     text-align: center;
+    z-index:100;
 }
 
 </style>
@@ -58,11 +59,21 @@ header="""<style>
     <p>
         <a style='text-decoration: auto; color: wheat ;' href="https://www.linkedin.com/in/gowtham-buvalli-chikkathammaiah-788b62a9/" target="_blank">
             Hi, I am Gowtham BC looking for Job oppurtunities in Germany. 
-            You can reach out to me at bcgowtham17@gmail.com
+            reach me at bcgowtham17@gmail.com
         </a>
     </p>
 </div>
 """
+
+def JobSearch():
+    jobsearchbanner = st.sidebar
+    SHOWBANNER:bool = st.secrets["SHOWBANNER"]
+    if SHOWBANNER:
+        with jobsearchbanner:
+            if st.button("Hi, I am Gowtham BC looking for Job oppurtunities in Germany.",help="Digital CV link",use_container_width=True):
+                    st.switch_page("pages/Resume.py")
+    return jobsearchbanner
+
 
 
 footer="""<style>
@@ -89,6 +100,28 @@ hr {
 [data-testid=stSidebar] {
   background-image: linear-gradient(#ffffff, #e3daab);
 }
+
+section[data-testid="stSidebar"] {
+    width: 25% !important; 
+}
+
+[data-testid=stSidebarCollapseButton] {
+  color:black !important;
+}
+
+[data-testid=stSidebarNavViewButton]  {
+  color:black !important;
+}
+
+
+
+
+.stLogo {
+    height: 80%;
+    width: 160%;
+
+}
+
 
 .footercustom {
     position: fixed;

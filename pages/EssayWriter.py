@@ -8,7 +8,7 @@ from langchain_community.llms import CTransformers
 import streamlit as st
 from urllib.request import urlopen
 from shutil import copyfileobj
-from headerfooter import footer,Disclaimer
+from headerfooter import footer,Disclaimer,JobSearch
 
 #accelerator = Accelerator()
 LANGCHAIN_TRACING_V2=False
@@ -71,7 +71,7 @@ def getLlamaResponse(input_text, no_words, category):
 
 st.set_page_config(page_title = "Essay Writer",
                     layout='centered',
-                    initial_sidebar_state = "collapsed")
+                    initial_sidebar_state = "auto")
 
 
 col1, col2 = st.columns([60,40],gap="medium",vertical_alignment="bottom")
@@ -103,3 +103,4 @@ with st.container(border=True):
 
 Disclaimer()
 st.markdown(footer,unsafe_allow_html=True)
+JobSearch()

@@ -3,7 +3,7 @@
 from pathlib import Path
 import streamlit as st
 from PIL import Image
-from headerfooter import get_img_with_href,footer
+from headerfooter import get_img_with_href,footer,JobSearch
 
 
 # --- PATH SETTINGS ---
@@ -13,6 +13,12 @@ resume_file = current_dir / "assets" / "gowtham-AI-resume.pdf"
 profile_pic = current_dir / "assets" / "Gowtham.PNG"
 githublogo = current_dir / "assets" / "github.svg"
 linkedinlogo = current_dir / "assets" / "linkedin2.svg"
+
+logo = current_dir / "assets" / "logo2.png"
+
+st.logo(
+    image=Image.open(logo)    
+)
 
 # --- GENERAL SETTINGS ---
 PAGE_TITLE = "Digital CV | Gowtham B C"
@@ -168,3 +174,4 @@ for project, link in PROJECTS.items():
 
 
 st.markdown(footer,unsafe_allow_html=True)
+JobSearch()

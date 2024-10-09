@@ -1,5 +1,5 @@
 import streamlit as st
-from headerfooter import footer,Disclaimer
+from headerfooter import footer,Disclaimer,JobSearch
 st.set_page_config(page_title = "Summarizer",
                     layout='centered',
                     initial_sidebar_state = "expanded")
@@ -71,3 +71,4 @@ Example: This Article is extracted from URL: https://www.gesetze-im-internet.de/
 
 Disclaimer()
 st.markdown(footer,unsafe_allow_html=True)
+JobSearch()

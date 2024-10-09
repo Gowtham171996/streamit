@@ -2,10 +2,12 @@
 
 
 import streamlit as st
-from headerfooter import footer,Disclaimer 
+from headerfooter import footer,Disclaimer,JobSearch
 st.set_page_config(page_title = "Gowtham B C Portfolio",layout='centered',initial_sidebar_state = "expanded")
 
 #st.markdown(header,unsafe_allow_html=True)
+
+
 
 st.title("Gowtham B C Portfolio")
 with st.container(border=False):
@@ -57,5 +59,6 @@ with st.container(border=True):
 Disclaimer("These models are very small in neurons (computation capabilities) hence they cant perform like state of the art solutions. These models are here to demonstrate the ability that these systems can be built by the Gowtham B C. Provided enough time and resources.")
 #st.markdown("Email Id: bcgowtham17@gmail.com")
 st.markdown(footer,unsafe_allow_html=True)
+JobSearch()
 
 
