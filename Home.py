@@ -11,7 +11,7 @@ st.title("Gowtham B C Portfolio")
 st.header("✍️ LLM Tools Demo", divider=True)
 
 with st.container(border=True):
-    col1, col2 = st.columns(2)
+    col1, col2 = st.columns([30,70],gap="medium")
     with col1:
         if st.button("Summarizer"):
             st.switch_page("pages/Summarizer.py")
@@ -20,7 +20,7 @@ with st.container(border=True):
 
 
 with st.container(border=True):
-    col1, col2 = st.columns(2)
+    col1, col2 = st.columns([30,70],gap="medium")
     with col1:
         if st.button("Essay Writer"):
             st.switch_page("pages/EssayWriter.py")
@@ -29,9 +29,9 @@ with st.container(border=True):
 
 
 with st.container(border=True):
-    col1, col2 = st.columns(2)
+    col1, col2 = st.columns([30,70],gap="medium")
     with col1:
-        if st.button("PDF Question and Answer"):
+        if st.button("PDF Question & Answer"):
             st.switch_page("pages/PDFQuery.py")
     with col2:
         st.markdown("A Q&A tool which accepts PDF in text format and answers question based on the PDF text.  \n"  
@@ -39,7 +39,7 @@ with st.container(border=True):
 
 
 with st.container(border=True):
-    col1, col2 = st.columns(2)
+    col1, col2 = st.columns([30,70],gap="medium")
     with col1:
         if st.button("Web Scrapper"):
             st.switch_page("pages/WebScraper.py")

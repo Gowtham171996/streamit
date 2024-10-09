@@ -48,7 +48,15 @@ footer="""<style>
 a:link , a:visited > span{
     background-color: transparent;
     color: black ;
-    font-weight: bold;
+}
+
+a:link  > span{
+    background-color: transparent;
+    color: black ;
+}
+
+ul {
+  list-style-type: none;
 }
 
 a:hover,  a:active {
@@ -59,6 +67,10 @@ a:hover,  a:active {
 /* Change the sidebar color*/
 [data-testid=stSidebar] {
   background-image: linear-gradient(#ffffff, #e3daab);
+}
+
+[data-testid=stMarkdownContainer] a:link {
+  color: wheat;
 }
 
 

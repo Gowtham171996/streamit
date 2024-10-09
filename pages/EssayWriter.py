@@ -71,10 +71,10 @@ def getLlamaResponse(input_text, no_words, category):
 
 st.set_page_config(page_title = "Essay Writer",
                     layout='centered',
-                    initial_sidebar_state = "expanded")
+                    initial_sidebar_state = "collapsed")
 
 
-col1, col2 = st.columns(2)
+col1, col2 = st.columns([60,40],gap="medium")
 with st.container(border=True):
     with col1:
         st.header("Essay Writer")
