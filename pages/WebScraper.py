@@ -2,6 +2,7 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
+from headerfooter import footer,Disclaimer
 
 
 
@@ -64,8 +65,6 @@ with st.container(border=True):
         df = df.drop_duplicates()
         table = st.dataframe(df,use_container_width=True)
 
-with st.container(border=True):
-    st.markdown('''
-:red[NOTE:] 
-      Since every site has there own html tags and styles, currently it is
-optimised for default site url. Which can be extended as in required.  ''')
+Disclaimer("Since every site has there own html tags and styles, currently it is optimised for default site url. Which can be extended as in required.")
+
+st.markdown(footer,unsafe_allow_html=True)

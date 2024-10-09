@@ -8,6 +8,7 @@ from langchain_community.llms import CTransformers
 import streamlit as st
 from urllib.request import urlopen
 from shutil import copyfileobj
+from headerfooter import footer,Disclaimer
 
 #accelerator = Accelerator()
 LANGCHAIN_TRACING_V2=False
@@ -98,10 +99,7 @@ with st.container(border=True):
     if submit:
         st.write(getLlamaResponse(input_text, no_words, category))
 
-with st.container(border=True):
-    st.markdown('''
-:red[NOTE:] 
-     Since the Freemium server computation capability is restricted to 2.3GB RAM. 
-Considerably very small LLM's are used. This can be easily scaled as in when 
-hardware resources are available. Yes, The response text contains json format 
-as string which can be further simplified''')
+
+
+Disclaimer()
+st.markdown(footer,unsafe_allow_html=True)

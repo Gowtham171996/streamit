@@ -3,6 +3,7 @@ import torch
 import streamlit as st
 from transformers import AutoTokenizer, AutoModelForQuestionAnswering
 from transformers import pipeline
+from headerfooter import footer,Disclaimer
 
 def ReadPDF(file_path):
     #file_path = "models/sanjith-authorizationletter.pdf"
@@ -16,7 +17,8 @@ def ReadPDF(file_path):
 def FindAnswer(context,question):
     qa_pipeline = pipeline(
         "question-answering",
-        "timpal0l/mdeberta-v3-base-squad2",
+        "distilbert-base-cased-distilled-squad",
+        #"timpal0l/mdeberta-v3-base-squad2",
         #model="mrm8488/bert-small-finetuned-squadv2",
         #tokenizer="mrm8488/bert-small-finetuned-squadv2",
         framework="pt"
@@ -35,7 +37,7 @@ def FindAnswer(context,question):
 
 st.set_page_config(page_title = "PDF Query",
                     layout='centered',
-                    initial_sidebar_state = "expanded")
+                    initial_sidebar_state = "auto")
 
 col1, col2 = st.columns(2)
 with st.container(border=True):
@@ -87,13 +89,10 @@ with st.container(border=True):
     else:
         st.markdown(''':red[Please upload the PDF file.]''')
 
-with st.container(border=True):
-    st.markdown('''
-:red[NOTE:] 
-      Since the Freemium server computation capability is restricted to 2.3GB RAM. 
-Considerably very small LLM's are used. This can be easily scaled as in when 
-hardware resources are available which gives better summarizations.  ''')
-    
+
+Disclaimer()
+st.markdown(footer,unsafe_allow_html=True)
+
                 #context = "remember the number 123456, I'll ask you later."
             #print(context)
             #question = "Where is the office ?"

@@ -1,5 +1,5 @@
 import streamlit as st
-
+from headerfooter import footer,Disclaimer
 st.set_page_config(page_title = "Summarizer",
                     layout='centered',
                     initial_sidebar_state = "expanded")
@@ -69,9 +69,5 @@ Example: This Article is extracted from URL: https://www.gesetze-im-internet.de/
     if submit:
         st.write(Summariser(wall_of_text))
 
-with st.container(border=True):
-    st.markdown('''
-:red[NOTE:] 
-     Since the Freemium server computation capability is restricted to 2.3GB RAM. 
-Considerably very small LLM's are used. This can be easily scaled as in when 
-hardware resources are available which gives better summarizations. ''')
+Disclaimer()
+st.markdown(footer,unsafe_allow_html=True)

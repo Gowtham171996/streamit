@@ -1,3 +1,12 @@
 [server]
 enableXsrfProtection = false
 enableCORS = false
+runOnSave = true
+maxUploadSize = 200
+
+
+[theme]
+# The preset Streamlit theme that your custom theme inherits from.
+# One of "light" or "dark".
+base = "dark"
+textColor="wheat"
