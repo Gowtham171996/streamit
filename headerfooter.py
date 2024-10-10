@@ -1,3 +1,5 @@
+#  Emoji https://emojidb.org/ai-emojis?utm_source=user_search
+
 import streamlit as st
 from pathlib import Path
 from PIL import Image
@@ -7,7 +9,7 @@ def Getlogo():
     current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
     logopath = current_dir / "pages" / "assets" / "logo2.png"
     logo = st.logo(
-        image=Image.open(logopath)    
+        image=Image.open(logopath)
     )
     return logo
 
@@ -55,8 +57,16 @@ def JobSearch():
     SHOWBANNER:bool = st.secrets["SHOWBANNER"]
     if SHOWBANNER:
         with jobsearchbanner:
-            if st.button("Hi, I am Gowtham BC looking for Job opportunities in Germany.",help="Digital CV link",use_container_width=True):
+            if st.button("Hi, I am Gowtham BC looking for Job opportunities within Germany.",help="Digital CV link",use_container_width=True):
                     st.switch_page("pages/Resume.py")
+            st.html('''<p style='color:black;'> Location: 🏠 Hof, Germany, 🇩🇪 </br>
+                    <b> 🤖🧠👾🇦🇮 Consultant</b> with 6 years work experience in AI, Software engineer & Consulting.</br>
+                    <b>Relocation: Throughout Germany </b></br>
+                    Joining: Immediately </br>
+                    Visa: Blue Card from 3yrs
+                    </p>''')
+            
+            
     return jobsearchbanner
 
 

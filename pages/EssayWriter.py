@@ -82,6 +82,8 @@ with st.container(border=True):
         if st.button("Home",use_container_width=True):
             st.switch_page("Home.py")
 
+st.write("---")
+
 with st.container(border=True):
     input_text = st.text_input("Enter the topic you want to write about:","Australia")
 

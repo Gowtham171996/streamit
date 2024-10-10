@@ -46,7 +46,7 @@ with st.container(border=True):
     with col2:    
         if st.button("Home",use_container_width=True):
             st.switch_page("Home.py")
-
+st.write("---")
 
 # Initialize chat history
 if "messages" not in st.session_state:

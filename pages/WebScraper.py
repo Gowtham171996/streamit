@@ -45,6 +45,8 @@ with st.container(border=True):
         if st.button("Home",use_container_width=True):
             st.switch_page("Home.py")
 
+st.write("---")
+
 with st.container(border=True):
     input_URL = st.text_input("Enter the URL to parse:",'https://www.gesetze-im-internet.de/englisch_gg/englisch_gg.html')
 

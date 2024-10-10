@@ -10,7 +10,7 @@ with col1:
 with col2:
     if st.button("Home",use_container_width=True):
         st.switch_page("Home.py")
-
+st.write("---")
 
 def Summariser(wall_of_text):
     import torch
