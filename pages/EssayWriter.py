@@ -8,7 +8,7 @@ from langchain_community.llms import CTransformers
 import streamlit as st
 from urllib.request import urlopen
 from shutil import copyfileobj
-from headerfooter import footer,Disclaimer,JobSearch
+from headerfooter import footer,Disclaimer,JobSearch,Getlogo
 
 #accelerator = Accelerator()
 LANGCHAIN_TRACING_V2=False
@@ -103,4 +103,5 @@ with st.container(border=True):
 
 Disclaimer()
 st.markdown(footer,unsafe_allow_html=True)
+Getlogo()
 JobSearch()

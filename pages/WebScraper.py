@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-from headerfooter import footer,Disclaimer,JobSearch
+from headerfooter import footer,Disclaimer,JobSearch,Getlogo
 
 
 
@@ -36,6 +36,7 @@ st.set_page_config(page_title = "Web Scrapper",
                     layout='centered',
                     initial_sidebar_state = "expanded")
 
+
 col1, col2 = st.columns([60,40],gap="medium",vertical_alignment="bottom")
 with st.container(border=True):
     with col1:
@@ -68,4 +69,5 @@ with st.container(border=True):
 Disclaimer("Since every site has there own html tags and styles, currently it is optimised for default site url. Which can be extended as in required.")
 
 st.markdown(footer,unsafe_allow_html=True)
+Getlogo()
 JobSearch()

@@ -3,7 +3,7 @@
 from pathlib import Path
 import streamlit as st
 from PIL import Image
-from headerfooter import get_img_with_href,footer,JobSearch
+from headerfooter import get_img_with_href,footer,JobSearch,Getlogo
 
 
 # --- PATH SETTINGS ---
@@ -14,11 +14,7 @@ profile_pic = current_dir / "assets" / "Gowtham.PNG"
 githublogo = current_dir / "assets" / "github.svg"
 linkedinlogo = current_dir / "assets" / "linkedin2.svg"
 
-logo = current_dir / "assets" / "logo2.png"
-
-st.logo(
-    image=Image.open(logo)    
-)
+Getlogo()
 
 # --- GENERAL SETTINGS ---
 PAGE_TITLE = "Digital CV | Gowtham B C"
@@ -45,7 +41,6 @@ github_html = get_img_with_href(githublogo, 'https://github.com/Gowtham171996')
 linkedin_html = get_img_with_href(linkedinlogo, 'https://www.linkedin.com/in/gowtham-buvalli-chikkathammaiah-788b62a9/')
 
 
-
 with st.container(border=True):
     # --- LOAD CSS, PDF & PROFIL PIC ---
     with open(css_file) as f:
@@ -58,7 +53,8 @@ with st.container(border=True):
     # --- HERO SECTION ---
     col1, col2 = st.columns([0.4,0.6], gap="medium")
     with col1:
-        st.image(profile_pic, width=220)
+        #st.image(profile_pic, width=220)
+        st.image(profile_pic)
 
     with col2:
         st.title(NAME)

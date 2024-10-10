@@ -1,8 +1,15 @@
 import streamlit as st
 from pathlib import Path
-
+from PIL import Image
 import base64,os
 
+def Getlogo():
+    current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
+    logopath = current_dir / "pages" / "assets" / "logo2.png"
+    logo = st.logo(
+        image=Image.open(logopath)    
+    )
+    return logo
 
 def get_base64_of_bin_file(bin_file):
     with open(bin_file, 'rb') as f:
@@ -41,36 +48,14 @@ def Disclaimer(text=""):
 
     return disclaimerbox
 
-header="""<style>
 
-.headercustom {
-    position: fixed;
-    left: 0px;
-    Top: 100px;
-    width:100%;
-    background-color: rgb(38 39 48);
-    color: black;
-    text-align: center;
-    z-index:100;
-}
-
-</style>
-<div class="headercustom">
-    <p>
-        <a style='text-decoration: auto; color: wheat ;' href="https://www.linkedin.com/in/gowtham-buvalli-chikkathammaiah-788b62a9/" target="_blank">
-            Hi, I am Gowtham BC looking for Job oppurtunities in Germany. 
-            reach me at bcgowtham17@gmail.com
-        </a>
-    </p>
-</div>
-"""
 
 def JobSearch():
     jobsearchbanner = st.sidebar
     SHOWBANNER:bool = st.secrets["SHOWBANNER"]
     if SHOWBANNER:
         with jobsearchbanner:
-            if st.button("Hi, I am Gowtham BC looking for Job oppurtunities in Germany.",help="Digital CV link",use_container_width=True):
+            if st.button("Hi, I am Gowtham BC looking for Job opportunities in Germany.",help="Digital CV link",use_container_width=True):
                     st.switch_page("pages/Resume.py")
     return jobsearchbanner
 
@@ -105,23 +90,14 @@ section[data-testid="stSidebar"] {
     width: 25% !important; 
 }
 
-[data-testid=stSidebarCollapseButton] {
+[data-testid=stSidebarCollapseButton], [data-testid=stSidebarNavViewButton] {
   color:black !important;
 }
-
-[data-testid=stSidebarNavViewButton]  {
-  color:black !important;
-}
-
-
-
 
 .stLogo {
     height: 80%;
     width: 160%;
-
 }
-
 
 .footercustom {
     position: fixed;
@@ -144,3 +120,68 @@ section[data-testid="stSidebar"] {
 </div>
 """
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+###################################################################################################################################
+header="""<style>
+
+.headercustom {
+    position: fixed;
+    left: 0px;
+    Top: 100px;
+    width:100%;
+    background-color: rgb(38 39 48);
+    color: black;
+    text-align: center;
+    z-index:100;
+}
+
+</style>
+<div class="headercustom">
+    <p>
+        <a style='text-decoration: auto; color: wheat ;' href="https://www.linkedin.com/in/gowtham-buvalli-chikkathammaiah-788b62a9/" target="_blank">
+            Hi, I am Gowtham BC looking for Job oppurtunities in Germany. 
+            reach me at bcgowtham17@gmail.com
+        </a>
+    </p>
+</div>
+"""

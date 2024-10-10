@@ -3,7 +3,7 @@ import torch
 import streamlit as st
 from transformers import AutoTokenizer, AutoModelForQuestionAnswering
 from transformers import pipeline
-from headerfooter import footer,Disclaimer,JobSearch
+from headerfooter import footer,Disclaimer,JobSearch,Getlogo
 
 def ReadPDF(file_path):
     #file_path = "models/sanjith-authorizationletter.pdf"
@@ -93,6 +93,7 @@ with st.container(border=True):
 Disclaimer()
 st.markdown(footer,unsafe_allow_html=True)
 JobSearch()
+Getlogo()
 
                 #context = "remember the number 123456, I'll ask you later."
             #print(context)
