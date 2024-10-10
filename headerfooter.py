@@ -95,8 +95,8 @@ section[data-testid="stSidebar"] {
 }
 
 .stLogo {
-    height: 80%;
-    width: 160%;
+    height: 10vh;
+    width: calc(100vw - 150px);
 }
 
 .footercustom {
