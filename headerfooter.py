@@ -59,14 +59,16 @@ def JobSearch():
         with jobsearchbanner:
             if st.button("Hi, I am Gowtham BC looking for Job opportunities within Germany.",help="Digital CV link",use_container_width=True):
                     st.switch_page("pages/Resume.py")
-            st.html('''<p style='color:black;'> Location: 🏠 Hof, Germany, 🇩🇪 </br>
-                    <b> 🤖🧠👾🇦🇮 Consultant</b> with 6 years work experience in AI, Software engineer & Consulting.</br>
-                    <b>Relocation: Throughout Germany </b></br>
+            st.html('''<p style='color:black;'> Location: Hof, Germany, 🇩🇪 </br>
+                    <b> AI Consultant</b> with 6 years work experience in AI, Software engineer & Consulting</br>
+                    Relocation: Throughout Germany </br>
                     Joining: Immediately </br>
                     Visa: Blue Card from 3yrs
                     </p>''')
             
-            
+    
+
+
     return jobsearchbanner
 
 
@@ -100,14 +102,21 @@ section[data-testid="stSidebar"] {
     width: 25% !important; 
 }
 
-[data-testid=stSidebarCollapseButton], [data-testid=stSidebarNavViewButton] {
+ [data-testid="stSidebarHeader"]::before {
+                content: "Gowtham Portfolio";
+                margin-left: 10px;
+                margin-top: 20px;
+                font-size: inherit;
+                font-weight: bold;
+                top: 100px;
+                color:black;
+            }
+
+[data-testid=stSidebarCollapseButton], [data-testid=stSidebarNavViewButton],[data-testid=stSidebarNavItems] > header  {
   color:black !important;
 }
 
-.stLogo {
-    height: 10vh;
-    width: calc(100vw - 150px);
-}
+
 
 .footercustom {
     position: fixed;
@@ -131,7 +140,10 @@ section[data-testid="stSidebar"] {
 """
 
 
-
+#.stLogo {
+#    height: 10vh;
+#    width: calc(100vw - 150px);
+#}
 
 
 

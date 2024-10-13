@@ -14,7 +14,6 @@ profile_pic = current_dir / "assets" / "Gowtham.PNG"
 githublogo = current_dir / "assets" / "github.svg"
 linkedinlogo = current_dir / "assets" / "linkedin2.svg"
 
-Getlogo()
 
 # --- GENERAL SETTINGS ---
 PAGE_TITLE = "Digital CV | Gowtham B C"
@@ -171,3 +170,4 @@ for project, link in PROJECTS.items():
 
 st.markdown(footer,unsafe_allow_html=True)
 JobSearch()
+#Getlogo()

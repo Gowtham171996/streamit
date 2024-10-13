@@ -93,7 +93,7 @@ with st.container(border=True):
 Disclaimer()
 st.markdown(footer,unsafe_allow_html=True)
 JobSearch()
-Getlogo()
+#Getlogo()
 
                 #context = "remember the number 123456, I'll ask you later."
             #print(context)

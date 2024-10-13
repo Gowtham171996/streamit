@@ -72,4 +72,4 @@ Example: This Article is extracted from URL: https://www.gesetze-im-internet.de/
 Disclaimer()
 st.markdown(footer,unsafe_allow_html=True)
 JobSearch()
-Getlogo()
+#Getlogo()

@@ -71,5 +71,5 @@ with st.container(border=True):
 Disclaimer("Since every site has there own html tags and styles, currently it is optimised for default site url. Which can be extended as in required.")
 
 st.markdown(footer,unsafe_allow_html=True)
-Getlogo()
+#Getlogo()
 JobSearch()

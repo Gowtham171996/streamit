@@ -104,5 +104,5 @@ with st.container(border=True):
 Disclaimer()
 
 st.markdown(footer,unsafe_allow_html=True)
-Getlogo()
+#Getlogo()
 JobSearch()
