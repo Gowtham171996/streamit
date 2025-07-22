@@ -39,8 +39,9 @@ def ContactDoctor(user_text):
 
 with st.container(border=True):
     user_text =  st.text_area(''' Note: This model is for demonstration purpose only, please consult doctor for medical advise. \n
-                              Enter the text here to summarise: \n ''', 
-                              '''I'm a 35-year-old male and for the past few months, I've been experiencing fatigue, increased sensitivity to cold, and dry, itchy skin. What is the diagnosis here?''')
+                              Enter the text here to summarise: 
+                              '''
+                              , ''' I'm a 35-year-old male and for the past few months, I've been experiencing fatigue, increased sensitivity to cold, and dry, itchy skin. What is the diagnosis here?''')
     submit = st.button("Generate")
 
     if submit:
