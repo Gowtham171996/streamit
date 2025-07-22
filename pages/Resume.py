@@ -20,16 +20,16 @@ PAGE_TITLE = "Digital CV | Gowtham B C"
 PAGE_ICON = ":wave:"
 NAME = "Gowtham B C"
 DESCRIPTION = """
-Senior Artificial Intelligence Consultant and Developer, assisting enterprises in application of AI solutions.
+Data science and Artificial Intelligence Team Lead, assisting enterprises in application of AI solutions.
 """
 EMAIL = "bcgowtham17@gmail.com"
 
 
 PROJECTS = {
-    "🏆 Sales Dashboard - Comparing sales across three stores": "https://youtu.be/Sb0A9i6d320",
-    "🏆 Income and Expense Tracker - Web app with NoSQL database": "https://youtu.be/3egaMfE9388",
-    "🏆 Desktop Application - Excel2CSV converter with user settings & menubar": "https://youtu.be/LzCfNanQ_9c",
-    "🏆 MyToolBelt - Custom MS Excel add-in to combine Python & Excel": "https://pythonandvba.com/mytoolbelt/",
+    "🏆 ISO 42001:2023 certified AI/ML auditor from TUV SÜD": "https://www.linkedin.com/in/gowtham-buvalli-chikkathammaiah-788b62a9/overlay/1751030806395/single-media-viewer/?profileId=ACoAABchS9gBQL62xfkrVDNWGwMY-NT9qyUHXew",
+    "🏆 Best Master thesis award 2021 from city Hof, Bavaria": "https://www.tvo.de/hochschule-hof-700-absolventinnen-und-absolventen-verabschiedet-581078/",
+    "🏆 Many AI/ML research paper Publications": "https://www.ijsrp.org/research-paper-0619.php?rp=P908743",
+
 }
 
 
@@ -86,7 +86,7 @@ st.write('\n')
 st.subheader("Experience & Qualifications")
 st.write(
     """
-- ✔️ 🧑‍💻 6 Years experience of Artificial Instelligence, Software Engineer and Consulting.
+- ✔️ 🧑‍💻 6.5+ Years experience of Artificial Instelligence, Software Engineer and Consulting.
 - ✔️ Strong hands on experience and knowledge in Full stack software development.
 - ✔️ Good understanding of statistical principles and their respective applications
 - ✔️ Excellent team-player and displaying strong sense of initiative on tasks
@@ -101,10 +101,14 @@ st.write("---")
 st.subheader("Hard Skills")
 st.write(
     """
-- 👩‍💻 Programming: Python (Scikit-learn, Pandas), SQL, VBA
-- 📊 Data Visulization: PowerBi, MS Excel, Plotly
-- 📚 Modeling: Logistic regression, linear regression, decition trees
-- 🗄️ Databases: Postgres, MongoDB, MySQL
+- ► Programming Languages: Python, Bash, MongoDB, SQL, C++
+- ► Front End: HTML, Javascript, Node.js, ReactJS, ExpressJS Rest API’s, FastAPI
+- ► Deployment: Docker, Kubernetes CI/CD pipelines: AWS, GCP, Azure DevOps, Jenkins, Terraform,
+- ► AI Frameworks: Tensorflow, Pytorch, Keras, Huggingface, Numpy, Pandas, YOLO, OpenAI
+- ► LLM’s: Transformers, LLaMa 3, BERT, GPT 3, GPT4, Mistral, Langchain
+- ► Collaboration Tools: Scrum, Agile workflow, Firebase, MLOps, Version Control: Jira, Git, Github,
+- ► Development: Parallel Threads, CUDA, Distributed Training, Design principles, Agile Development
+
 """
 )
 
@@ -153,16 +157,16 @@ st.write("---")
 st.subheader("Languages")
 st.write(
     """
-- 🇩🇪 German: B2
-- 🇺🇸 English: C1
+- ► 🇩🇪 German: B2
+- ► 🇺🇸 English: C1
 """
 )
 
 
-# --- Projects & Accomplishments ---
+# --- Certificates & Accomplishments ---
 st.write('\n')
 st.write("---")
-st.subheader("Projects & Accomplishments")
+st.subheader("Certificates & Accomplishments")
 
 for project, link in PROJECTS.items():
     st.write(f"[{project}]({link})")

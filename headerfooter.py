@@ -59,15 +59,12 @@ def JobSearch():
         with jobsearchbanner:
             if st.button("Hi, I am Gowtham BC looking for Job opportunities within Germany.",help="Digital CV link",use_container_width=True):
                     st.switch_page("pages/Resume.py")
-            st.html('''<p style='color:black;'> Location: Hof, Germany, 🇩🇪 </br>
-                    <b> AI Consultant</b> with 6 years work experience in AI, Software engineer & Consulting</br>
-                    Relocation: Throughout Germany </br>
-                    Joining: Immediately </br>
-                    Visa: Blue Card from 3yrs
+            st.html('''<p style='color:black;'> Location: Berlin, Germany, 🇩🇪 </br>
+                    <b> Data Science & AI Team Lead </b> with 6.5+ years work experience in AI, Software engineer & Consulting</br>
+                    <b>Relocation</b>: Throughout Germany </br>
+                    <b>Joining</b>: 2 Weeks notice </br>
+                    <b>Visa</b>: Permanent Residense
                     </p>''')
-            
-    
-
 
     return jobsearchbanner
 
