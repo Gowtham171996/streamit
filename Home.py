@@ -34,7 +34,15 @@ with st.container(border=True):
         if st.button("Contact Doctor",use_container_width=True):
             st.switch_page("pages/MedicalDiagnosis.py")
     with col2:
-        st.markdown("This is a simple LLM model trained on medical datasets to answer user queries regarding health.")
+        st.markdown("This is a simple LLM model trained on medical datasets to answer user queries regarding health. Output restricted to 256 tokens.")
+
+with st.container(border=True):
+    col1, col2 = st.columns([30,70],gap="medium",vertical_alignment="center")
+    with col1:
+        if st.button("Object Detection",use_container_width=True):
+            st.switch_page("pages/ObjectDetection.py")
+    with col2:
+        st.markdown("This is a simple CV YOLO model trained on pulbic available datasets to draw bounding box and identify the minimal objects.")
 
 
 with st.container(border=True):

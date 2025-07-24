@@ -3,11 +3,10 @@
 from pathlib import Path
 import streamlit as st
 from PIL import Image
-from headerfooter import get_img_with_href,footer,JobSearch,Getlogo
+from headerfooter import get_img_with_href,footer,JobSearch,Getlogo,current_dir
 
 
 # --- PATH SETTINGS ---
-current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
 css_file = current_dir / "assets" / "main.css"
 resume_file = current_dir / "assets" / "gowtham-AI-resume.pdf" 
 profile_pic = current_dir / "assets" / "Gowtham.PNG"
@@ -86,10 +85,11 @@ st.write('\n')
 st.subheader("Experience & Qualifications")
 st.write(
     """
-- ✔️ 🧑‍💻 6.5+ Years experience of Artificial Instelligence, Software Engineer and Consulting.
-- ✔️ Strong hands on experience and knowledge in Full stack software development.
-- ✔️ Good understanding of statistical principles and their respective applications
-- ✔️ Excellent team-player and displaying strong sense of initiative on tasks
+- ✔️ Artificial Intelligence Engineer Team Lead with 6.5+ years of expertise in cloud-based platforms, AI integration, and Deep learning Models applications (LLM) for real-world use cases. 
+- ✔️ Developing tools & infrastructure scalable AI / ML pipelines and working with text and image datasets generation and model training, production deployment using Azure. Strong proficiency in Python, hands-on experience in React, PostgreSQL, Azure DevOps & Pytorch, TensorFlow for AI development OpenCV, Transformers. 
+- ✔️ Strong background in Natural language processing, and deep learning architectures like BERT, GPT 3, GPT 4, Llama & vision transformers. 
+- ✔️ TÜV Süd certified ISO AI/ML auditor for responsible Data governance & Compliance. 
+- ✔️ Won the “2021 Hof city Best Thesis Award”. 
 """
 )
 
@@ -120,8 +120,21 @@ st.subheader("Work History")
 #st.write("---")
 
 # --- JOB 1
-st.write("🚧", "**Senior Artificial Consultant | IISYS, Bavaria**")
+st.write("🚧", "**Data science & AI Team Lead (LLM, ML, Generative AI) | Solventum OPC private limited, Berlin**")
 st.write("10/2021 - Present")
+st.write(
+    """
+- ► Developed scalable and secure backend for LLM architecture for industrial application cases for using pretrained LLM’s on custom collected dataset from various databases. (text, image)
+- ► Through Agile methodology built a platform for Retrieval-Augmented Generation (RAG), agents, and prompt engineering strategies, improving response time by 25% for production deployment.
+- ► Created automated CI/CD pipelines using Azure DevOps, improving deployment efficiency by 40%
+- ► Managed team members with training sessions: knowledge sharing, technical excellence in solution deployment, architecture planning, system design sessions, problem solving algorithms, software engineering best practices, evaluations Benchmarking, technical documentations, code reviews.
+"""
+)
+
+# --- JOB 2
+st.write('\n')
+st.write("🚧", "**Mid Senior Applied AI engineer | IISYS - Hof, Germany**")
+st.write("08/2020 - 09/2021")
 st.write(
     """
 - ► Generative AI: Collaborated with a German Management to develop a real-time mobile application that identifies eCommerce products and customer problems in text using Generative AI classification models for quality assurance. Web scraping of Product Images, EIN (European Identification Number), User sentiments, product review and text summarisation in dashboard.
@@ -129,24 +142,17 @@ st.write(
 """
 )
 
-# --- JOB 2
-st.write('\n')
-st.write("🚧", "**Computer Vision and Machine Learning engineer | Livello, Dusseldorf & IISYS - Hof, Germany**")
-st.write("08/2020 - 09/2021")
-st.write(
-    """
-- ►  Object Detection: For smart fridges: Creation of Data, Training model with TensorFlow, Deployment on Azure framework, Admin Dashboard using MERNstack, communication and coordinate demo for clients such as Aldi. 
-"""
-)
-
 # --- JOB 3
 st.write('\n')
-st.write("🚧", "**Senior software engineer | CGI & Mindtree, Bangalore, India**")
+st.write("🚧", "** Data science & ML engineer | CGI & Mindtree, Bangalore, India**")
 st.write("06/2017 - 02/2020")
 st.write(
     """
+- ► Azure Chatbot: As Early adopters-built data pipelines for multimodal creation of text dataset, Customer recommendation system incorporating sentiment analysis & entity recognition.
+- ► Developed a secure, scalable backend using python and SQL for a real-time project monitoring system UI UX Designs and chatbot multi agent systems as priority on Azure cloud platforms.
+- ► Integrated continuous monitoring with cloud services, ensuring seamless data flow and advanced analysis and optimization for software development for production environments.
 - ► Developed web applications dashboard for simplified User Interface and User Experience (UI and UX), site monitoring tool solutions using Sharepoint Elastic search and custom crawlers scripts which index 10000+ sites on half weekly basis and collect gigabytes of text information to our database.
-- ► Worked on dashboard as Full stack developer including Azure cloud infrastructure setup, cloud monitoring and custom sharepoint .Net scripts development.Devised KPIs using SQL across company website in collaboration with cross-functional teams to achieve a 120% jump in organic traﬃc
+
 """
 )
 

@@ -5,9 +5,12 @@ from pathlib import Path
 from PIL import Image
 import base64,os
 
+current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
+current_dir = current_dir / "pages" 
+
 def Getlogo():
     current_dir = Path(__file__).parent if "__file__" in locals() else Path.cwd()
-    logopath = current_dir / "pages" / "assets" / "logo2.png"
+    logopath = current_dir / "assets" / "logo2.png"
     logo = st.logo(
         image=Image.open(logopath)
     )

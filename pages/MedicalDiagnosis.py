@@ -1,5 +1,8 @@
 import streamlit as st
-from headerfooter import footer,Disclaimer,JobSearch,Getlogo
+from PIL import Image
+from headerfooter import footer,Disclaimer,JobSearch,Getlogo,current_dir
+
+output_pic = current_dir / "assets" / "Medicaldiagnosisoutput.png"
 
 st.set_page_config(page_title = "Contact Doctor",
                     layout='centered',
@@ -25,7 +28,7 @@ def ContactDoctor(user_text):
         pipeline = transformers.pipeline( "text-generation", model=model_id, model_kwargs={"torch_dtype": torch.bfloat16}, device_map="auto", )
 
         messages = [ {"role": "system", "content": "You are an expert trained on healthcare and biomedical domain!"}, 
-                     {"role": "user", "content": "I'm a 35-year-old male and for the past few months, I've been experiencing fatigue, increased sensitivity to cold, and dry, itchy skin. What is the diagnosis here?"},
+                     {"role": "user", "content": user_text},
                     ]
 
         prompt = pipeline.tokenizer.apply_chat_template( messages, tokenize=False, add_generation_prompt=True )
@@ -39,13 +42,18 @@ def ContactDoctor(user_text):
 
 with st.container(border=True):
     user_text =  st.text_area(''' Note: This model is for demonstration purpose only, please consult doctor for medical advise. \n
-                              Enter the text here to summarise: 
-                              '''
+Enter the text here to summarise:'''
                               , ''' I'm a 35-year-old male and for the past few months, I've been experiencing fatigue, increased sensitivity to cold, and dry, itchy skin. What is the diagnosis here?''')
     submit = st.button("Generate")
 
     if submit:
-        st.write(ContactDoctor(user_text))
+        try:
+            raise Exception('This is the exception you expect to handle')
+            st.write(ContactDoctor(user_text))
+        except:
+            st.write(":red[Sorry failed to load model due to server capabilities restriction from freemium.]")
+            st.write(":red[This is reply screenshot for Dev laptop:] ")
+            st.image(Image.open(output_pic))
 
 Disclaimer()
 st.markdown(footer,unsafe_allow_html=True)
