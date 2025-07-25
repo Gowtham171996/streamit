@@ -1,5 +1,7 @@
 models/*
 .streamlit/secrets.toml
 test.py
-.pyc
+*.pyc
 venv_llm_app/*
+pages/ecotraders.db
+pages/pharmadataset/*
