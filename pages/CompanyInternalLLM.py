@@ -1,5 +1,5 @@
 import streamlit as st
-import os # Import os for path handling
+import os
 import sqlite3
 from sqlalchemy import create_engine, text, inspect
 from langchain_community.utilities import SQLDatabase
@@ -15,11 +15,12 @@ import pandas as pd
 
 from langchain.agents import AgentExecutor, AgentType, initialize_agent
 from langchain.prompts import PromptTemplate
-from headerfooter import footer,Disclaimer,JobSearch,Getlogo,current_dir
+# Removed: from langchain_core.callbacks import BaseCallbackHandler # Removed this import
+
+from headerfooter import footer,Disclaimer,JobSearch,Getlogo,current_dir # Imported headerfooter components
 
 # --- Database Setup ---
 DATABASE_FILE_NAME = "ecotraders.db"
-# Use an absolute path relative to the current script's directory
 DATABASE_PATH = os.path.join(os.path.dirname(__file__), DATABASE_FILE_NAME)
 
 def setup_file_database(force_recreate=False):
@@ -28,20 +29,18 @@ def setup_file_database(force_recreate=False):
     or if force_recreate is True.
     Returns the SQLAlchemy engine connected to this database.
     """
-    db_exists = os.path.exists(DATABASE_PATH) # Check existence using absolute path
+    db_exists = os.path.exists(DATABASE_PATH)
 
     if force_recreate and db_exists:
-        os.remove(DATABASE_PATH) # Delete using absolute path
+        os.remove(DATABASE_PATH)
         db_exists = False
         st.warning(f"Existing database '{DATABASE_FILE_NAME}' deleted. Recreating...")
 
     if not db_exists:
         st.info(f"Creating and populating new database: {DATABASE_FILE_NAME} at {DATABASE_PATH} with 100 sample entries per table.")
-        # Use sqlite3 directly for initial creation and population with absolute path
         conn = sqlite3.connect(DATABASE_PATH)
         cursor = conn.cursor()
 
-        # Create tables
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS companies (
                 company_id INTEGER PRIMARY KEY,
@@ -79,7 +78,6 @@ def setup_file_database(force_recreate=False):
             )
         """)
 
-        # --- Insert 100 Sample Data Entries ---
         company_names = ["Global Corp", "Tech Solutions", "Innovate Inc.", "Future Systems", "Alpha Omega"]
         owner_names = ["John Doe", "Jane Smith", "Alice Johnson", "Bob Williams"]
         operation_types = ["Sales", "Marketing", "HR", "R&D", "Logistics", "Finance", "Production"]
@@ -88,24 +86,20 @@ def setup_file_database(force_recreate=False):
         car_models = ["Tesla Model 3", "Mercedes-Benz C-Class", "BMW 3 Series", "Audi A4", "Toyota Camry", "Honda Civic"]
         lease_statuses = ["Available", "Leased", "Maintenance"]
 
-        # Companies
         for i in range(1, 101):
             cursor.execute("INSERT INTO companies (company_id, name, owner) VALUES (?, ?, ?)",
                            (i, f"{random.choice(company_names)} {i}", random.choice(owner_names)))
 
-        # Operations (link to existing companies)
         for i in range(101, 201):
             company_id = random.randint(1, 100)
             cursor.execute("INSERT INTO operations (operation_id, company_id, name, description) VALUES (?, ?, ?, ?)",
                            (i, company_id, f"{random.choice(operation_types)} Op {i}", f"Description for {random.choice(operation_types)} Operation {i}"))
 
-        # Farms (link to existing operations)
         for i in range(1, 101):
             operation_id = random.randint(101, 200)
             cursor.execute("INSERT INTO farms (farm_id, operation_id, location, crop, area_sq_m) VALUES (?, ?, ?, ?, ?)",
                            (i, operation_id, random.choice(farm_locations), random.choice(crops), round(random.uniform(10000, 100000), 2)))
 
-        # Cars (link to existing operations)
         for i in range(1, 101):
             operation_id = random.randint(101, 200)
             cursor.execute("INSERT INTO cars (car_id, operation_id, model, lease_status, daily_rate) VALUES (?, ?, ?, ?, ?)",
@@ -115,8 +109,7 @@ def setup_file_database(force_recreate=False):
         conn.close()
         st.success(f"Database '{DATABASE_FILE_NAME}' created and populated with 100 sample entries per table!")
 
-        # VERIFICATION STEP: Read data back to confirm
-        temp_conn = sqlite3.connect(DATABASE_PATH) # Use absolute path for verification
+        temp_conn = sqlite3.connect(DATABASE_PATH)
         temp_cursor = temp_conn.cursor()
         temp_cursor.execute("SELECT COUNT(*) FROM companies")
         st.info(f"Verification: Companies count: {temp_cursor.fetchone()[0]}")
@@ -131,7 +124,6 @@ def setup_file_database(force_recreate=False):
     else:
         st.info(f"Using existing database: {DATABASE_FILE_NAME} at {DATABASE_PATH}")
 
-    # Now, create and return the SQLAlchemy Engine connected to the file using absolute path
     engine = create_engine(f"sqlite:///{DATABASE_PATH}")
     return engine
 
@@ -139,6 +131,39 @@ def setup_file_database(force_recreate=False):
 device = 0 if torch.cuda.is_available() else -1
 
 gemini_llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0.1)
+
+# Removed: Custom Callback Handler for Streamlit Display
+# class StreamlitCallbackHandler(BaseCallbackHandler):
+#     def __init__(self, container):
+#         self.container = container
+#         self.log_messages = []
+
+#     def _update_container(self):
+#         self.container.markdown("\n".join(self.log_messages))
+
+#     def on_llm_start(self, serialized, prompts, **kwargs):
+#         self.log_messages.append(f"**LLM Start:** `{prompts[0][:100]}...`")
+#         self._update_container()
+
+#     def on_llm_end(self, response, **kwargs):
+#         self.log_messages.append(f"**LLM End:** `{response.generations[0][0].text[:100]}...`")
+#         self._update_container()
+
+#     def on_tool_start(self, serialized, input_str, **kwargs):
+#         self.log_messages.append(f"**Tool Start:** `{serialized['name']}` with input `{input_str}`")
+#         self._update_container()
+
+#     def on_tool_end(self, output, **kwargs):
+#         self.log_messages.append(f"**Tool End (Observation):** `{output[:100]}...`")
+#         self._update_container()
+
+#     def on_agent_action(self, action, **kwargs):
+#         self.log_messages.append(f"**Agent Action:** Thought: `{action.log.strip()}`")
+#         self._update_container()
+
+#     def on_agent_finish(self, finish, **kwargs):
+#         self.log_messages.append(f"**Agent Finish:** `{finish.log.strip()}`")
+#         self._update_container()
 
 # --- Helper function to format response as JSON ---
 def format_response_as_json(original_question: str, answer_content: str, source_type: str):
@@ -154,21 +179,28 @@ def format_response_as_json(original_question: str, answer_content: str, source_
     return json_data
 
 # --- Main Answer Function with RAG Logic ---
-def answer_question(question: str, sql_agent_executor=None):
+def answer_question(question: str, sql_agent_executor=None, callback_container=None): # callback_container parameter is now unused
     """
     Determines the best way to answer a question: from DB, or general knowledge.
     """
     final_answer_content = "I could not find an answer."
     source_used = "None"
 
-    db_keywords = ["how many", "list all", "total", "what is the", "show me", "companies", "operations", "farms", "cars", "owner", "crop", "model", "ecofinance", "aurum trade", "eco finance", "eco cars", "eco agri", "mysore", "coffee", "pepper", "tesla", "mercedes", "count", "average", "sum"]
-    is_db_question = any(keyword in question.lower() for keyword in db_keywords)
+    # Use session state for db_keywords
+    if "db_keywords" not in st.session_state:
+        st.session_state.db_keywords = ["how many", "list all", "total", "what is the", "show me", "companies", "operations", "farms", "cars", "owner", "crop", "model", "ecofinance", "aurum trade", "eco finance", "eco cars", "eco agri", "mysore", "coffee", "pepper", "tesla", "mercedes", "count", "average", "sum"]
+
+    is_db_question = any(keyword in question.lower() for keyword in st.session_state.db_keywords)
+
+    # Removed: callbacks = [StreamlitCallbackHandler(callback_container)] if callback_container else []
+    callbacks = [] # Ensure callbacks list is empty if the feature is removed
 
     # 1. Try to answer from Database if SQL agent is available and question seems database-related
     if sql_agent_executor and is_db_question:
         try:
             st.session_state.messages.append({"role": "assistant", "content": "Attempting to query the database..."})
-            db_response = sql_agent_executor.invoke({"input": question})
+            # Removed callbacks=callbacks from invoke()
+            db_response = sql_agent_executor.invoke({"input": question}) 
             
             if db_response and db_response.get("output"):
                 raw_output = db_response['output']
@@ -188,7 +220,8 @@ def answer_question(question: str, sql_agent_executor=None):
     # 2. Fallback to General Knowledge LLM
     try:
         st.session_state.messages.append({"role": "assistant", "content": "Answering using general knowledge..."})
-        general_answer = gemini_llm.invoke(question).content
+        # Removed callbacks=callbacks from invoke()
+        general_answer = gemini_llm.invoke(question).content 
         final_answer_content = general_answer
         source_used = "General Knowledge"
         st.session_state.messages.append({"role": "assistant", "content": f"**General Answer:** {final_answer_content}"})
@@ -198,12 +231,39 @@ def answer_question(question: str, sql_agent_executor=None):
         st.session_state.messages.append({"role": "assistant", "content": f"I apologize, I could not find an answer to your question. Error: {e}"})
         return format_response_as_json(question, "I apologize, I could not find an answer to your question.", "Failed")
 
+# --- REFINED PROMPT STRUCTURE (Moved to global scope) ---
+SQL_AGENT_PROMPT_PREFIX = """You are an AI assistant that can answer questions about the database.
+You have access to the following tools:
+
+{tools}
+
+Use the following format:
+
+Question: the input question you must answer
+Thought: you should always think about what to do
+Action: the action to take, should be one of [{tool_names}]
+Action Input: the input to the action
+Observation: the result of the action
+... (this Thought/Action/Action Input/Observation can repeat N times)
+Thought: I now know the final answer
+Final Answer: the final answer to the original input question
+
+Begin!
+
+Database Schema:
+{table_info}
+
+"""
+SQL_AGENT_PROMPT_SUFFIX = """Question: {input}
+Thought:{agent_scratchpad}"""
+
+# --- SQL Agent Initialization Function ---
 def SQLAgentInitate():
     st.session_state.sql_agent_executor = initialize_agent(
         tools=tools,
         llm=gemini_llm,
         agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-        verbose=True,
+        verbose=True, # Keep verbose=True if you still want console output
         handle_parsing_errors=True,
         agent_kwargs={
             "prefix": SQL_AGENT_PROMPT_PREFIX.format(
@@ -230,20 +290,28 @@ with st.container(border=True):
 
 st.write("---")
 
-# Initialize session state variables for database and agent
+# Initialize session state variables
 if "messages" not in st.session_state:
     st.session_state.messages = []
 if "langchain_db" not in st.session_state:
     st.session_state.langchain_db = None
 if "sql_agent_executor" not in st.session_state:
     st.session_state.sql_agent_executor = None
+if "uploaded_csv_df" not in st.session_state:
+    st.session_state.uploaded_csv_df = None
+if "db_keywords" not in st.session_state: # Initialize db_keywords in session state
+    st.session_state.db_keywords = ["how many", "list all", "total", "what is the", "show me", "companies", "operations", "farms", "cars", "owner", "crop", "model", "ecofinance", "aurum trade", "eco finance", "eco cars", "eco agri", "mysore", "coffee", "pepper", "tesla", "mercedes", "count", "average", "sum"]
+# Removed: if "agent_log_container" not in st.session_state:
+
 
 # Database Initialization (run once per session, or forced reset)
 if st.button("Reset Database (Deletes ecotraders.db)", type="secondary"):
-    if os.path.exists(DATABASE_PATH): # Use absolute path here
+    if os.path.exists(DATABASE_PATH):
         os.remove(DATABASE_PATH)
         st.session_state.langchain_db = None
         st.session_state.sql_agent_executor = None
+        st.session_state.uploaded_csv_df = None
+        st.session_state.db_keywords = ["how many", "list all", "total", "what is the", "show me", "companies", "operations", "farms", "cars", "owner", "crop", "model", "ecofinance", "aurum trade", "eco finance", "eco cars", "eco agri", "mysore", "coffee", "pepper", "tesla", "mercedes", "count", "average", "sum"] # Reset keywords
         st.rerun()
 
 if st.session_state.langchain_db is None:
@@ -253,66 +321,83 @@ if st.session_state.langchain_db is None:
     
     tools = st.session_state.sql_toolkit.get_tools()
 
-    # --- REFINED PROMPT STRUCTURE ---
-    SQL_AGENT_PROMPT_PREFIX = """You are an AI assistant that can answer questions about the database.
-You have access to the following tools:
+    SQLAgentInitate() # Call the initialization function
 
-{tools}
-
-Use the following format:
-
-Question: the input question you must answer
-Thought: you should always think about what to do
-Action: the action to take, should be one of [{tool_names}]
-Action Input: the input to the action
-Observation: the result of the action
-... (this Thought/Action/Action Input/Observation can repeat N times)
-Thought: I now know the final answer
-Final Answer: the final answer to the original input question
-
-Begin!
-
-Database Schema:
-{table_info}
-
-"""
-    SQL_AGENT_PROMPT_SUFFIX = """Question: {input}
-Thought:{agent_scratchpad}"""
-
-
-    SQLAgentInitate()
-
-    # --- Display Database Schema and Sample Data ---
     st.markdown("### Database Schema and Sample Data")
-    
-    # Display Schema
-    #st.markdown(f"**Schema:**")
-    #st.code(st.session_state.langchain_db.get_table_info(), language='sql')
-
-    # Display Top 10 rows for each table
     st.markdown(f"**Top 5 Rows from Each Table:**")
     db_tables = ["companies", "operations", "farms", "cars"]
     for table_name in db_tables:
         try:
-            # Use SQLAlchemy engine to fetch data
             with st.session_state.db_engine.connect() as connection:
                 query = f"SELECT * FROM {table_name} LIMIT 5"
                 result = connection.execute(text(query)).fetchall()
                 
-                # Get column names using inspector
                 inspector = inspect(st.session_state.db_engine)
                 column_names = [col["name"] for col in inspector.get_columns(table_name)]
 
                 st.markdown(f"**Table: `{table_name}`**")
                 if result:
-                    # Convert to pandas DataFrame for st.dataframe
-                    df = pd.DataFrame(result, columns=column_names) # NEW: Use pd.DataFrame
-                    st.dataframe(df, hide_index=True) # Pass DataFrame directly
+                    df = pd.DataFrame(result, columns=column_names)
+                    st.dataframe(df, hide_index=True)
                 else:
                     st.info(f"No data found in `{table_name}`.")
         except Exception as e:
             st.error(f"Error fetching data for table `{table_name}`: {e}")
             traceback.print_exc()
+
+# --- CSV Upload Section ---
+st.markdown("### Upload CSV File")
+uploaded_csv_file = st.file_uploader('Upload a CSV file', type=['csv'], key="csv_uploader")
+
+if uploaded_csv_file is not None:
+    if st.session_state.uploaded_csv_df is None or uploaded_csv_file.name != getattr(st.session_state, '_last_uploaded_csv_name', None):
+        try:
+            df_csv = pd.read_csv(uploaded_csv_file)
+            st.session_state.uploaded_csv_df = df_csv
+            st.session_state._last_uploaded_csv_name = uploaded_csv_file.name
+            st.success(f"CSV '{uploaded_csv_file.name}' loaded successfully!")
+            
+            st.markdown(f"**Top 5 Rows from `{uploaded_csv_file.name}`:**")
+            st.dataframe(df_csv.head(5), hide_index=True)
+
+            table_name_from_csv = "uploaded_csv_data"
+            st.info(f"Loading CSV data into database table: `{table_name_from_csv}`...")
+            
+            if st.session_state.db_engine is None:
+                st.session_state.db_engine = setup_file_database()
+
+            df_csv.to_sql(table_name_from_csv, st.session_state.db_engine, if_exists='replace', index=False)
+            st.success(f"CSV data loaded into database table `{table_name_from_csv}`.")
+
+            # --- AUTOMATE KEYWORD EXTRACTION FROM CSV COLUMNS ---
+            inspector = inspect(st.session_state.db_engine)
+            csv_column_names = [col["name"].lower() for col in inspector.get_columns(table_name_from_csv)]
+            
+            # Add unique column names to db_keywords
+            for col_name in csv_column_names:
+                if col_name not in st.session_state.db_keywords:
+                    st.session_state.db_keywords.append(col_name)
+            
+            st.info(f"Updated DB keywords with CSV columns: {st.session_state.db_keywords}")
+            # --- END AUTOMATION ---
+
+            st.session_state.langchain_db = SQLDatabase(st.session_state.db_engine)
+            st.session_state.sql_toolkit = SQLDatabaseToolkit(db=st.session_state.langchain_db, llm=gemini_llm)
+            tools = st.session_state.sql_toolkit.get_tools()
+            SQLAgentInitate() # Re-initialize the agent with updated tools and schema
+            
+            st.info("SQL Agent re-initialized with CSV table schema and updated keywords.")
+
+        except Exception as e:
+            st.error(f"Error reading or loading CSV file: {e}")
+            traceback.print_exc()
+    else:
+        st.info(f"CSV '{uploaded_csv_file.name}' already loaded.")
+        st.markdown(f"**Top 5 Rows from `{uploaded_csv_file.name}`:**")
+        st.dataframe(st.session_state.uploaded_csv_df.head(5), hide_index=True)
+else:
+    st.session_state.uploaded_csv_df = None
+    st.session_state._last_uploaded_csv_name = None
 
 
 with st.container(border=True):
@@ -322,13 +407,21 @@ with st.container(border=True):
         with st.chat_message(message["role"]):
             st.markdown(message["content"])
 
-    if question := st.chat_input(placeholder="Ask a question about the database or general knowledge..."):
+    if question := st.chat_input(placeholder="Ask a question about the database or uploaded CSV data..."):
         st.session_state.messages.append({"role": "user", "content": question})
+        
+        # Removed: Display Agent Logs in a dedicated area
+        # Removed: agent_log_container = st.container()
+        # Removed: st.session_state.agent_logs_display = []
+        # Removed: agent_log_container_for_this_question = st.session_state.agent_log_display_area.container()
+        
         with st.chat_message("user"):
             st.markdown(question)
 
         with st.chat_message("assistant"):
             answer_placeholder = st.empty()
+            
+            # Removed: callback_container=agent_log_container_for_this_question
             full_answer_json = answer_question(
                 question=question,
                 sql_agent_executor=st.session_state.sql_agent_executor
@@ -338,6 +431,6 @@ with st.container(border=True):
             st.session_state.messages.append({"role": "assistant", "content": f"```json\n{json.dumps(full_answer_json, indent=2)}\n```"})
 
 Disclaimer()
-st.markdown(footer,unsafe_allow_html=True)
+st.markdown(footer, unsafe_allow_html=True)
 JobSearch()
 #Getlogo()
