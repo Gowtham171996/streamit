@@ -48,7 +48,7 @@ Enter the text here to summarise:'''
 
     if submit:
         try:
-            raise Exception('This is the exception you expect to handle')
+            #raise Exception('This is the exception you expect to handle')
             st.write(ContactDoctor(user_text))
         except:
             st.write(":red[Sorry failed to load model due to server capabilities restriction from freemium.]")

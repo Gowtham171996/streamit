@@ -129,43 +129,10 @@ def setup_file_database(force_recreate=False):
 
 # --- LLM and QA Setup ---
 device = 0 if torch.cuda.is_available() else -1
+st.info(device)
 
 gemini_llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0.1)
 
-# Removed: Custom Callback Handler for Streamlit Display
-# class StreamlitCallbackHandler(BaseCallbackHandler):
-#     def __init__(self, container):
-#         self.container = container
-#         self.log_messages = []
-
-#     def _update_container(self):
-#         self.container.markdown("\n".join(self.log_messages))
-
-#     def on_llm_start(self, serialized, prompts, **kwargs):
-#         self.log_messages.append(f"**LLM Start:** `{prompts[0][:100]}...`")
-#         self._update_container()
-
-#     def on_llm_end(self, response, **kwargs):
-#         self.log_messages.append(f"**LLM End:** `{response.generations[0][0].text[:100]}...`")
-#         self._update_container()
-
-#     def on_tool_start(self, serialized, input_str, **kwargs):
-#         self.log_messages.append(f"**Tool Start:** `{serialized['name']}` with input `{input_str}`")
-#         self._update_container()
-
-#     def on_tool_end(self, output, **kwargs):
-#         self.log_messages.append(f"**Tool End (Observation):** `{output[:100]}...`")
-#         self._update_container()
-
-#     def on_agent_action(self, action, **kwargs):
-#         self.log_messages.append(f"**Agent Action:** Thought: `{action.log.strip()}`")
-#         self._update_container()
-
-#     def on_agent_finish(self, finish, **kwargs):
-#         self.log_messages.append(f"**Agent Finish:** `{finish.log.strip()}`")
-#         self._update_container()
-
-# --- Helper function to format response as JSON ---
 def format_response_as_json(original_question: str, answer_content: str, source_type: str):
     """
     Formats the given answer content into a JSON structure.
@@ -192,7 +159,6 @@ def answer_question(question: str, sql_agent_executor=None, callback_container=N
 
     is_db_question = any(keyword in question.lower() for keyword in st.session_state.db_keywords)
 
-    # Removed: callbacks = [StreamlitCallbackHandler(callback_container)] if callback_container else []
     callbacks = [] # Ensure callbacks list is empty if the feature is removed
 
     # 1. Try to answer from Database if SQL agent is available and question seems database-related
@@ -409,11 +375,6 @@ with st.container(border=True):
 
     if question := st.chat_input(placeholder="Ask a question about the database or uploaded CSV data..."):
         st.session_state.messages.append({"role": "user", "content": question})
-        
-        # Removed: Display Agent Logs in a dedicated area
-        # Removed: agent_log_container = st.container()
-        # Removed: st.session_state.agent_logs_display = []
-        # Removed: agent_log_container_for_this_question = st.session_state.agent_log_display_area.container()
         
         with st.chat_message("user"):
             st.markdown(question)
