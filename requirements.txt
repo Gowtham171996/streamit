@@ -10,9 +10,6 @@ langchain-community
 langchain-google-genai
 torch
 transformers
-langchain_community
 beautifulsoup4
-pandas
 pypdf
-ChatGoogleGenerativeAI
 pandas
