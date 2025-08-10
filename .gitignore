@@ -1,5 +1,4 @@
 models/*
-.streamlit/secrets.toml
 test.py
 *.pyc
 venv_llm_app/*
