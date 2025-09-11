@@ -1,5 +1,6 @@
 models/*
 __pycache__/
+.streamlit\secrets.toml
 test.py
 *.pyc
 venv_llm_app/*

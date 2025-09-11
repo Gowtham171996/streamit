@@ -23,10 +23,11 @@ def ContactDoctor(user_text):
 
     #model_id = "ContactDoctor/Bio-Medical-Llama-3-8B"
     model_id = "ContactDoctor/Bio-Medical-Llama-3-2-1B-CoT-012025"
+    hf_token = st.secrets["HF_TOKEN"]
 
     with st.spinner("Running the model... just few seconds more...."):
     
-        pipeline = transformers.pipeline( "text-generation", model=model_id, model_kwargs={"torch_dtype": torch.bfloat16}, device_map="auto", )
+        pipeline = transformers.pipeline( "text-generation", model=model_id, model_kwargs={"torch_dtype": torch.bfloat16}, device_map="auto", use_auth_token=hf_token )
 
         messages = [ {"role": "system", "content": "You are an expert trained on healthcare and biomedical domain!"}, 
                      {"role": "user", "content": user_text},
