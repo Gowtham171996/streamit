@@ -129,7 +129,7 @@ def setup_file_database(force_recreate=False):
 
 # --- LLM and QA Setup ---
 device = 0 if torch.cuda.is_available() else -1
-st.info(device)
+#st.info(device)
 
 gemini_llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0.1)
 

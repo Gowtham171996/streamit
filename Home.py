@@ -31,6 +31,14 @@ with st.container(border=True):
 with st.container(border=True):
     col1, col2 = st.columns([30,70],gap="medium",vertical_alignment="center")
     with col1:
+        if st.button("Company Internal LLM",use_container_width=True):
+            st.switch_page("pages/CompanyInternalLLM.py")
+    with col2:
+        st.markdown("This is a simple LLM which intakes excel or datatables and writes SQL query and fetch the data. Google's Gemini is the backend of it. ")
+
+with st.container(border=True):
+    col1, col2 = st.columns([30,70],gap="medium",vertical_alignment="center")
+    with col1:
         if st.button("Contact Doctor",use_container_width=True):
             st.switch_page("pages/MedicalDiagnosis.py")
     with col2:

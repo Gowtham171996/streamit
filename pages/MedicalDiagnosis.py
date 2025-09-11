@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 from PIL import Image
 from headerfooter import footer,Disclaimer,JobSearch,Getlogo,current_dir
 
@@ -50,7 +51,8 @@ Enter the text here to summarise:'''
         try:
             #raise Exception('This is the exception you expect to handle')
             st.write(ContactDoctor(user_text))
-        except:
+        except Exception as e:
+            st.error(f"An error occurred: {e}")
             st.write(":red[Sorry failed to load model due to server capabilities restriction from freemium.]")
             st.write(":red[This is reply screenshot for Dev laptop:] ")
             st.image(Image.open(output_pic))

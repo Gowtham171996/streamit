@@ -57,7 +57,7 @@ def Disclaimer(text=""):
 
 def JobSearch():
     jobsearchbanner = st.sidebar
-    SHOWBANNER:bool = st.secrets["SHOWBANNER"]
+    SHOWBANNER:bool = True
     if SHOWBANNER:
         with jobsearchbanner:
             if st.button("Hi, I am Gowtham BC looking for Job opportunities within Germany.",help="Digital CV link",use_container_width=True):
