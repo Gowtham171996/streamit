@@ -1,3 +1,4 @@
+torch torchvision --index-url https://download.pytorch.org/whl/cpu
 sentence-transformers
 uvicorn
 ctransformers
@@ -5,7 +6,6 @@ langchain
 python-box
 streamlit
 sqlalchemy
-langchain
 langchain-community
 langchain-google-genai
 transformers
@@ -14,4 +14,3 @@ pypdf
 pandas
 accelerate
 hf_xet
-
