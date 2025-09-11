@@ -8,10 +8,10 @@ sqlalchemy
 langchain
 langchain-community
 langchain-google-genai
-torch
 transformers
 beautifulsoup4
 pypdf
 pandas
 accelerate
+
 hf_xet
