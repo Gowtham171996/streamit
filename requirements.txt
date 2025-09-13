@@ -1,3 +1,5 @@
+torch --index-url https://download.pytorch.org/whl/cpu
+torchvision
 sentence-transformers
 uvicorn
 ctransformers
@@ -5,10 +7,8 @@ langchain
 python-box
 streamlit
 sqlalchemy
-langchain
 langchain-community
 langchain-google-genai
-torch
 transformers
 beautifulsoup4
 pypdf
