@@ -3,21 +3,18 @@ import os
 import sqlite3
 from sqlalchemy import create_engine, text, inspect
 from langchain_community.utilities import SQLDatabase
-from langchain_google_genai import ChatGoogleGenerativeAI
+# Removed: from langchain_google_genai import ChatGoogleGenerativeAI
+from langchain_community.llms import LlamaCpp # New import for local models
 from langchain_community.agent_toolkits import SQLDatabaseToolkit
-from langchain_community.agent_toolkits.sql.base import create_sql_agent
 import torch
 import traceback
 import json
 from datetime import datetime, timezone
 import random
 import pandas as pd 
-
-from langchain.agents import AgentExecutor, AgentType, initialize_agent
-from langchain.prompts import PromptTemplate
-# Removed: from langchain_core.callbacks import BaseCallbackHandler # Removed this import
-
-from headerfooter import footer,Disclaimer,JobSearch,Getlogo,current_dir # Imported headerfooter components
+from langchain.agents import AgentType, initialize_agent
+# Removed: from langchain_core.callbacks import BaseCallbackHandler
+from headerfooter import footer,Disclaimer,JobSearch 
 
 # --- Database Setup ---
 DATABASE_FILE_NAME = "ecotraders.db"
@@ -88,22 +85,22 @@ def setup_file_database(force_recreate=False):
 
         for i in range(1, 101):
             cursor.execute("INSERT INTO companies (company_id, name, owner) VALUES (?, ?, ?)",
-                           (i, f"{random.choice(company_names)} {i}", random.choice(owner_names)))
+                            (i, f"{random.choice(company_names)} {i}", random.choice(owner_names)))
 
         for i in range(101, 201):
             company_id = random.randint(1, 100)
             cursor.execute("INSERT INTO operations (operation_id, company_id, name, description) VALUES (?, ?, ?, ?)",
-                           (i, company_id, f"{random.choice(operation_types)} Op {i}", f"Description for {random.choice(operation_types)} Operation {i}"))
+                            (i, company_id, f"{random.choice(operation_types)} Op {i}", f"Description for {random.choice(operation_types)} Operation {i}"))
 
         for i in range(1, 101):
             operation_id = random.randint(101, 200)
             cursor.execute("INSERT INTO farms (farm_id, operation_id, location, crop, area_sq_m) VALUES (?, ?, ?, ?, ?)",
-                           (i, operation_id, random.choice(farm_locations), random.choice(crops), round(random.uniform(10000, 100000), 2)))
+                            (i, operation_id, random.choice(farm_locations), random.choice(crops), round(random.uniform(10000, 100000), 2)))
 
         for i in range(1, 101):
             operation_id = random.randint(101, 200)
             cursor.execute("INSERT INTO cars (car_id, operation_id, model, lease_status, daily_rate) VALUES (?, ?, ?, ?, ?)",
-                           (i, operation_id, random.choice(car_models), random.choice(lease_statuses), round(random.uniform(50, 200), 2)))
+                            (i, operation_id, random.choice(car_models), random.choice(lease_statuses), round(random.uniform(50, 200), 2)))
 
         conn.commit()
         conn.close()
@@ -128,11 +125,21 @@ def setup_file_database(force_recreate=False):
     return engine
 
 # --- LLM and QA Setup ---
-device = 0 if torch.cuda.is_available() else -1
-#st.info(device)
-os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
+# Removed Google API Key dependency
+# os.environ["GOOGLE_API_KEY"] = st.secrets["GOOGLE_API_KEY"]
 
-gemini_llm = ChatGoogleGenerativeAI(model="gemini-2.0-flash", temperature=0.1)
+# This is the new LLM that uses the local Gemma model file.
+# We set the model path and offload to GPU if available.
+MODEL_PATH = "gemma-3-4b-it-q4_0.gguf"
+local_llm = LlamaCpp(
+    model_path=MODEL_PATH,
+    temperature=0.1,
+    n_ctx=4096,
+    n_gpu_layers=-1 if torch.cuda.is_available() else 0,
+    verbose=True,
+    n_threads=os.cpu_count()//2
+)
+
 
 def format_response_as_json(original_question: str, answer_content: str, source_type: str):
     """
@@ -160,13 +167,12 @@ def answer_question(question: str, sql_agent_executor=None, callback_container=N
 
     is_db_question = any(keyword in question.lower() for keyword in st.session_state.db_keywords)
 
-    callbacks = [] # Ensure callbacks list is empty if the feature is removed
+    callbacks = []
 
     # 1. Try to answer from Database if SQL agent is available and question seems database-related
     if sql_agent_executor and is_db_question:
         try:
             st.session_state.messages.append({"role": "assistant", "content": "Attempting to query the database..."})
-            # Removed callbacks=callbacks from invoke()
             db_response = sql_agent_executor.invoke({"input": question}) 
             
             if db_response and db_response.get("output"):
@@ -187,8 +193,7 @@ def answer_question(question: str, sql_agent_executor=None, callback_container=N
     # 2. Fallback to General Knowledge LLM
     try:
         st.session_state.messages.append({"role": "assistant", "content": "Answering using general knowledge..."})
-        # Removed callbacks=callbacks from invoke()
-        general_answer = gemini_llm.invoke(question).content 
+        general_answer = local_llm.invoke(question) # The LlamaCpp wrapper has a similar invoke method
         final_answer_content = general_answer
         source_used = "General Knowledge"
         st.session_state.messages.append({"role": "assistant", "content": f"**General Answer:** {final_answer_content}"})
@@ -228,9 +233,9 @@ Thought:{agent_scratchpad}"""
 def SQLAgentInitate():
     st.session_state.sql_agent_executor = initialize_agent(
         tools=tools,
-        llm=gemini_llm,
+        llm=local_llm, # Using the local LLM here
         agent=AgentType.ZERO_SHOT_REACT_DESCRIPTION,
-        verbose=True, # Keep verbose=True if you still want console output
+        verbose=True, 
         handle_parsing_errors=True,
         agent_kwargs={
             "prefix": SQL_AGENT_PROMPT_PREFIX.format(
@@ -245,15 +250,18 @@ def SQLAgentInitate():
 
 
 # --- Streamlit UI Layout ---
-st.set_page_config(page_title="Intelligent Query Buddy", layout='centered', initial_sidebar_state="auto")
+st.set_page_config(page_title="Intelligent Query Buddy", layout='wide', initial_sidebar_state="auto")
 
 col1, col2 = st.columns([65, 35], gap="small", vertical_alignment="bottom")
 with st.container(border=True):
     with col1:
         st.header("Intelligent Query Buddy")
     with col2:
-        if st.button("Home", use_container_width=True):
-            st.switch_page("Home.py")
+        # Assuming headerfooter.py exists with this function
+        # if st.button("Home", use_container_width=True):
+        #    st.switch_page("Home.py")
+        pass
+
 
 st.write("---")
 
@@ -284,7 +292,7 @@ if st.button("Reset Database (Deletes ecotraders.db)", type="secondary"):
 if st.session_state.langchain_db is None:
     st.session_state.db_engine = setup_file_database()
     st.session_state.langchain_db = SQLDatabase(st.session_state.db_engine)
-    st.session_state.sql_toolkit = SQLDatabaseToolkit(db=st.session_state.langchain_db, llm=gemini_llm)
+    st.session_state.sql_toolkit = SQLDatabaseToolkit(db=st.session_state.langchain_db, llm=local_llm) # Using the local LLM here
     
     tools = st.session_state.sql_toolkit.get_tools()
 
@@ -349,7 +357,7 @@ if uploaded_csv_file is not None:
             # --- END AUTOMATION ---
 
             st.session_state.langchain_db = SQLDatabase(st.session_state.db_engine)
-            st.session_state.sql_toolkit = SQLDatabaseToolkit(db=st.session_state.langchain_db, llm=gemini_llm)
+            st.session_state.sql_toolkit = SQLDatabaseToolkit(db=st.session_state.langchain_db, llm=local_llm) # Using the local LLM here
             tools = st.session_state.sql_toolkit.get_tools()
             SQLAgentInitate() # Re-initialize the agent with updated tools and schema
             
@@ -383,7 +391,6 @@ with st.container(border=True):
         with st.chat_message("assistant"):
             answer_placeholder = st.empty()
             
-            # Removed: callback_container=agent_log_container_for_this_question
             full_answer_json = answer_question(
                 question=question,
                 sql_agent_executor=st.session_state.sql_agent_executor
@@ -392,7 +399,8 @@ with st.container(border=True):
             
             st.session_state.messages.append({"role": "assistant", "content": f"```json\n{json.dumps(full_answer_json, indent=2)}\n```"})
 
+# Assuming headerfooter.py exists with these functions
 Disclaimer()
 st.markdown(footer, unsafe_allow_html=True)
 JobSearch()
-#Getlogo()
+# Getlogo()

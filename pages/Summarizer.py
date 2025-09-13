@@ -21,7 +21,6 @@ def Summariser(wall_of_text):
     summarizer = pipeline(
         "summarization",
         hf_name,
-        device=0 if torch.cuda.is_available() else -1,
     )
 
     with st.spinner("Running the model... just few seconds more...."):

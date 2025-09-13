@@ -6,3 +6,4 @@ test.py
 venv_llm_app/*
 pages/ecotraders.db
 pages/pharmadataset/*
+*.gguf

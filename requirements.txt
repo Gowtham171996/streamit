@@ -13,5 +13,6 @@ transformers
 beautifulsoup4
 pypdf
 pandas
+llama-cpp-python
 accelerate
 hf_xet
